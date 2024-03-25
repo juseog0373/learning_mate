@@ -25,4 +25,8 @@ public class LearningService {
     public void write(WritingTbl writingTbl){
         writingRepostiroy.save(writingTbl);
     }
+
+    public WritingTbl writingView(Integer id){
+        return writingRepostiroy.findById(id).get();
+    }
 }

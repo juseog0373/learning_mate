@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class LearningController {
     }
 
     @PostMapping("/writing/writepro")
-    public String WritePro(WritingTbl writingTbl){
+    public String writePro(WritingTbl writingTbl){
 
         learningService.write(writingTbl);
 
@@ -45,5 +46,10 @@ public class LearningController {
         return "login";
     }
 
-
+    @GetMapping("/detail/{id}")
+    public String detail(Model model,@PathVariable(name = "id") Integer id){
+        model.addAttribute("list",learningService.writingView(id));
+        System.out.println(id);
+        return "detail";
+    }
 }

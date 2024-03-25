@@ -16,7 +16,7 @@
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <div th:each="WritingTbl : ${list}" th:if="${WritingTbl.titleNum le 21}" class="col mb-5"> <!--titlenum이 21인 값 까지 가져옴 임시로 해둠-->
                 <div class="card h-100">
-                    <img class="card-img-top" th:src="${WritingTbl.img}" alt="Product Image" />
+                    <img class="card-img-top img-fluid" th:src="@{/images/{imageName}(imageName=${WritingTbl.img})}" alt="Product Image" />
                     <div class="card-body p-4">
                         <div class="text-center">
                             <h5 class="fw-bolder" th:text="${WritingTbl.title}">Product Name</h5>
@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{/detail/{titleNum}(titleNum=${WritingTbl.titleNum})}">알아보기</a></div>
                     </div>
                 </div>
             </div>
