@@ -1,67 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Write Post - Learning Mate</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <link href="/bootstrap/css/styles.css" rel="stylesheet" />
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="/bootstrap/assets/favicon.ico" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="/bootstrap/css/styles.css" rel="stylesheet" />
-    <style>
-         img {
-             max-width: 85px;
-             max-height: 85px;
-             float: left;
-             margin-right: 10px;
-         }
-    </style>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="head :: head"></div>
 <body>
-<!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container px-4 px-lg-5">
-        <a href="/">
-            <img src="/images/logo.png" alt="Logo">
-        </a>
-        <!--                <a class="navbar-brand" href="#!">Learning-mate</a>-->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="writing">글 작성</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">게시판</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">자유 게시판</a></li>
-                        <li><a class="dropdown-item" href="#!">HOT 게시글</a></li>
-                        <li><a class="dropdown-item" href="#!">취업·진로 게시판</a></li>
-                    </ul>
-            </ul>
-            </li>
-            </ul>
-            <form class="d-flex">
-                <button class="btn btn-outline-dark" type="submit">
-                    Login
-                </button>
-            </form>
-        </div>
-    </div>
-</nav>
+<div th:replace="nav :: nav"></div>
 <div class="container mt-5">
     <h2 class="mb-4">게시글 작성</h2>
-    <form>
+    <form action="writing/writepro" method="post">
         <div class="mb-3">
             <label for="postTitle" class="form-label">제목</label>
-            <input type="text" class="form-control" id="postTitle" placeholder="Enter title">
+            <input type="text" class="form-control" id="postTitle" placeholder="Enter title" name="title">
         </div>
         <div class="mb-3">
             <label for="postContent" class="form-label">내용</label>
-            <textarea class="form-control" id="postContent" rows="6" placeholder="Enter your content"></textarea>
+            <textarea class="form-control" id="postContent" rows="6" placeholder="Enter your content" name="content"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">작성</button>
+        <div class="mb-3">
+            <label for="postTitle" class="form-label">이미지</label>
+            <input type="text" class="form-control" id="postImg" placeholder="Enter title" name="img">
+        </div>
+        <button type="submit" class="btn btn-outline-dark">작성</button>
     </form>
 </div>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
