@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="head :: head"></div>
+<body>
+<div th:replace="nav :: nav"></div>
+<div class="container mt-5">
+    <h2 class="mb-4">게시글 작성</h2>
+    <form action="writing/writepro" method="post">
+        <div class="mb-3">
+            <label for="postTitle" class="form-label">제목</label>
+            <input type="text" class="form-control" id="postTitle" placeholder="Enter title" name="title">
+        </div>
+        <div class="mb-3">
+            <label for="postContent" class="form-label">내용</label>
+            <textarea class="form-control" id="postContent" rows="6" placeholder="Enter your content" name="content"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="postTitle" class="form-label">이미지</label>
+            <input type="text" class="form-control" id="postImg" placeholder="Enter title" name="img">
+        </div>
+        <button type="submit" class="btn btn-outline-dark">작성</button>
+    </form>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+<link href="/bootstrap/js/scripts.js" rel="stylesheet" />
+</body>
+</html>
