@@ -1,27 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="head :: head"></div>
+<div th:replace="layout/head :: head"></div>
+<head>
+    <meta charset="UTF-8">
+    <title>Study Detail</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/style.css}" />
+</head>
 <body>
-<div th:replace="nav :: nav"></div>
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5">
-            <div th:each="WritingTbl : ${list}" class="col-lg-8" >
-                <div class="card mb-4">
-                    <img class="card-img-top" th:src="@{/images/{imageName}(imageName=${WritingTbl.img})}" alt="Product Image" />
-                    <div class="card-body">
-                        <h2 class="card-title" th:text="${WritingTbl.title}">Product Name</h2>
-                        <p class="card-text" th:text="${WritingTbl.content}">Product Description</p>
-                    </div>
-                </div>
-            </div>
+<div th:replace="layout/nav :: nav"></div>
+
+<div class="container mt-5">
+    <h1 class="detail-header" th:text="${list.title}">Study Title</h1><br>
+    <hr>
+    <br><br>
+    <div class="detail-info">
+        <div><dt>스터디 과목</dt>&nbsp;&nbsp;<dd th:text="${list.studySubject}">Subject</dd></div>
+        <div><dt>진행 방식</dt>&nbsp;&nbsp;<dd th:text="${list.studyType}">Type</dd></div>
+        <div><dt>모집 인원</dt>&nbsp;&nbsp;<dd th:text="${list.totalPeople}">0</dd></div>
+        <div><dt>마감 날짜</dt>&nbsp;&nbsp;<dd th:text="${list.dueDate}">2023-01-01</dd></div>
+        <div><dt>연락 방법</dt>&nbsp;&nbsp;<dd><a th:href="${list.contactLink}" th:text="${list.contactLink}" class="detail-link">Open Chat</a></dd></div>
+    </div>
+    <br><br><br><br>
+    <div>
+        <div>
+            <h3 style="text-align: left; font-weight: bold;">스터디 소개</h3>
+            <hr>
+            <div id="contentBox" th:text="${list.content}">Content here</div>
         </div>
     </div>
-</section>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/bootstrap/js/scripts.js"></script>
+</div>
+<script>
+    // 특정 글자 수마다 줄바꿈 추가 함수
+    function addLineBreaks(selector, maxChars) {
+        const element = document.querySelector(selector);
+        if (element) {
+            let text = element.innerText;
+            let newText = '';
+            for (let i = 0; i < text.length; i += maxChars) {
+                newText += text.substring(i, i + maxChars) + '\n';
+            }
+            element.innerText = newText;
+        }
+    }
+
+    // 페이지 로드 시 실행
+    document.addEventListener('DOMContentLoaded', function() {
+        addLineBreaks('#contentBox', 149); // 예: 10글자 마다 줄바꿈 추가
+    });
+</script>
 </body>
-<footer class="py-5 bg-dark">
-    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
-</footer>
 </html>

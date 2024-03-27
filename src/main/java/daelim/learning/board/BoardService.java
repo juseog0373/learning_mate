@@ -25,7 +25,7 @@ public class BoardService {
         boardRepository.save(request.toEntity());
     }
 
-/*    public BoardDetailResponse findById(Long id){
+    public Board findById (Long id){
         return boardRepository.findById(id).get();
-    }*/
+    }
 }

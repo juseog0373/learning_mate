@@ -9,12 +9,14 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 public class BoardResponse {
+    private Long boardNo;
     private String title;
     private String dueDate;
     private String studySubject;
     private Integer viewCount;
 
     public BoardResponse(Board board) {
+        this.boardNo = board.getBoardNo();
         this.title = board.getTitle();
         this.dueDate = board.getDueDate();
         this.studySubject = board.getStudySubject();
