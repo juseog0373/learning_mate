@@ -19,7 +19,7 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardNo;
     private String title;
-    private Integer totalPeople;
+    private Integer totalPeople; //모집 인원
     @Enumerated(EnumType.STRING)
     private StudyType studyType; // 스터디 방식(ON, OFF, BOTH)
     private String studySubject; // 스터디 과목

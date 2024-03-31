@@ -6,7 +6,7 @@
 <div th:replace="layout/nav :: nav"></div>
 <div class="container mt-5">
     <h2 class="mb-4" style="font-weight: bold">어떤 스터디를 하실건가요?</h2>
-    <form action="board/write/writePro" method="post">
+    <form action="/write/writePro" method="post">
         <div class="form-row">
             <div class="mb-3">
                 <label for="postTitle1" class="form-label">제목</label>
@@ -44,7 +44,7 @@
 
         <div class="mb-3">
             <label for="postContent" class="form-label">스터디에 대해 소개해주세요!</label>
-            <textarea class="form-control" id="postContent" rows="6" placeholder="Enter your content" name="content"></textarea>
+            <textarea class="form-control" id="postContent" rows="6" placeholder="Enter your content" name="title"></textarea>
         </div>
         <div class="text-end">
             <button type="submit" class="btn btn-outline-dark">작성</button>

@@ -26,9 +26,41 @@
             <h3 style="text-align: left; font-weight: bold;">스터디 소개</h3>
             <hr>
             <div id="contentBox" th:text="${list.content}">Content here</div>
+            <hr>
+        </div><br><br>
+        <!-- 댓글 섹션 시작 -->
+        <div class="comments-section">
+            <h3 style="text-align: left; font-weight: bold;">댓글</h3>
+            <hr>
+
+            <!-- 댓글 입력 폼 -->
+            <form id="commentForm" action="/path/to/submit/comment" method="POST">
+                <div class="mb-3">
+                    <textarea class="form-control" id="commentText" name="comment" rows="3" placeholder="여기에 작성해주세요 ..."></textarea>
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="btn btn-primary" style="float: right; margin-left: auto; background-color: white; color: black; border: 1px solid black;">등록</button>
+                </div>
+            </form>
+
+            <!-- 제출된 댓글을 보여주는 영역 (예시) -->
+            <div class="submitted-comments mt-4">
+                <div th:each="comment : ${comments}">
+                    <div class="comment">
+                        <p class="comment-author" th:text="${comment.author}">작성자 이름</p>
+                        <p class="comment-content" th:text="${comment.content}">댓글 내용</p>
+                        <hr>
+                    </div>
+                </div>
+                <!-- 서버에서 댓글 목록을 받아올 때 사용하는 Thymeleaf 문법으로 작성된 예시입니다. 실제 데이터와 연동 필요 -->
+            </div>
         </div>
+        <!-- 댓글 섹션 끝 -->
     </div>
-</div>
+</div><br><br><br><br>
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+</footer>
 <script>
     // 특정 글자 수마다 줄바꿈 추가 함수
     function addLineBreaks(selector, maxChars) {

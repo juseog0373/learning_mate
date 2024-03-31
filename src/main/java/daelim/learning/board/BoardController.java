@@ -42,7 +42,7 @@ public class BoardController {
         return "board/write";
     }
 
-    @PostMapping("/board/write/writePro")
+    @PostMapping("/write/writePro")
     public String writePro(@ModelAttribute BoardRequest request){
         boardService.write(request);
 
