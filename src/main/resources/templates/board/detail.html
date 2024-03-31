@@ -34,13 +34,13 @@
             <hr>
 
             <!-- 댓글 입력 폼 -->
-            <form id="commentForm" action="/path/to/submit/comment" method="POST">
+            <form id="commentForm" action="#" method="POST">
                 <div class="mb-3">
                     <textarea class="form-control" id="commentText" name="comment" rows="3" placeholder="여기에 작성해주세요 ..."></textarea>
                 </div>
-                <div class="button-container">
-                    <button type="submit" class="btn btn-primary" style="float: right; margin-left: auto; background-color: white; color: black; border: 1px solid black;">등록</button>
-                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-outline-dark">등록</button>
+                </div><br><br>
             </form>
 
             <!-- 제출된 댓글을 보여주는 영역 (예시) -->
@@ -52,14 +52,14 @@
                         <hr>
                     </div>
                 </div>
-                <!-- 서버에서 댓글 목록을 받아올 때 사용하는 Thymeleaf 문법으로 작성된 예시입니다. 실제 데이터와 연동 필요 -->
+                <!-- 서버에서 댓글 목록을 받아올 때 사용하는 Thymeleaf 문법으로 작성된 예시. 데이터와 연동 필요 -->
             </div>
         </div>
         <!-- 댓글 섹션 끝 -->
     </div>
 </div><br><br><br><br>
 <footer class="py-5 bg-dark">
-    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Learning_Mate 2024</p></div>
 </footer>
 <script>
     // 특정 글자 수마다 줄바꿈 추가 함수
