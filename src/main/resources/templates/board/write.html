@@ -1,27 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="head :: head"></div>
+<div th:replace="layout/head :: head"></div>
+<link rel="stylesheet" th:href="@{/bootstrap/css/style.css}" />
 <body>
-<div th:replace="nav :: nav"></div>
+<div th:replace="layout/nav :: nav"></div>
 <div class="container mt-5">
-    <h2 class="mb-4">게시글 작성</h2>
-    <form action="writing/writepro" method="post">
-        <div class="mb-3">
-            <label for="postTitle" class="form-label">제목</label>
-            <input type="text" class="form-control" id="postTitle" placeholder="Enter title" name="title">
+    <h2 class="mb-4" style="font-weight: bold">어떤 스터디를 하실 건가요?</h2>
+    <form action="/write/writePro" method="post">
+        <div class="form-row">
+            <div class="mb-3">
+                <label for="postTitle1" class="form-label">제목</label>
+                <input type="text" class="form-control" id="postTitle1" placeholder="Enter title" name="title">
+            </div>
+
+            <div class="mb-3">
+                <label for="studySubject" class="form-label">스터디 과목</label>
+                <input type="text" class="form-control" id="studySubject" placeholder="Enter subject" name="studySubject">
+            </div>
         </div>
+
+        <div class="form-row">
+            <div class="mb-3">
+                <label for="totalPeople" class="form-label">모집 인원</label>
+                <input type="number" class="form-control" id="totalPeople" placeholder="Enter number" name="totalPeople" min="1">
+            </div>
+
+            <div class="mb-3">
+                <label for="studyType" class="form-label">진행 방식</label>
+                <select class="form-control" id="studyType" name="studyType">
+                    <option value="ONLINE">온라인</option>
+                    <option value="OFFLINE">오프라인</option>
+                    <option value="BOTH">온/오프라인</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="mb-3">
+                <label for="dueDate" class="form-label">모집 마감일</label>
+                <input type="date" class="form-control" id="dueDate" name="dueDate">
+            </div>
+
+            <div class="mb-3">
+                <label for="contactLink" class="form-label">오픈채팅 링크</label>
+                <input type="text" class="form-control" id="contactLink" placeholder="Enter link" name="contactLink">
+            </div>
+        </div>
+
         <div class="mb-3">
-            <label for="postContent" class="form-label">내용</label>
+            <label for="postContent" class="form-label">스터디에 대해 소개해주세요!</label>
             <textarea class="form-control" id="postContent" rows="6" placeholder="Enter your content" name="content"></textarea>
         </div>
-        <div class="mb-3">
-            <label for="postTitle" class="form-label">이미지</label>
-            <input type="text" class="form-control" id="postImg" placeholder="Enter title" name="img">
-        </div>
-        <button type="submit" class="btn btn-outline-dark">작성</button>
+        <div class="text-end">
+            <button type="submit" class="btn btn-outline-dark">작성</button>
+        </div><br><br>
     </form>
+
 </div>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Learning_Mate 2024</p></div>
+</footer>
 <link href="/bootstrap/js/scripts.js" rel="stylesheet" />
 </body>
 </html>

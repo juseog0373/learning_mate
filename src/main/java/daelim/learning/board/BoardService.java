@@ -20,12 +20,11 @@ public class BoardService {
         return boardList;
     }
     //글 작성
-
     public void write(BoardRequest request){
         boardRepository.save(request.toEntity());
     }
 
-/*    public BoardDetailResponse findById(Long id){
+    public Board findById (Long id){
         return boardRepository.findById(id).get();
-    }*/
+    }
 }
