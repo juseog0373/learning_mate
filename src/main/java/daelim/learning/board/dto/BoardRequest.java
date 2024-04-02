@@ -5,21 +5,24 @@ import daelim.learning.board.StudyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardRequest {
-    private Integer totalPeople;
+    private String totalPeople="0";
     private StudyType studyType;
     private String studySubject;
     private String dueDate;
     private String contactLink;
     private String title;
     private String content;
+    private int viewCount=0;
 
     public Board toEntity() {
         return Board.builder()
@@ -30,6 +33,7 @@ public class BoardRequest {
                 .contactLink(contactLink)
                 .title(title)
                 .content(content)
+                .viewCount(viewCount)
                 .build();
     }
 }
