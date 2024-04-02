@@ -5,10 +5,7 @@ import daelim.learning.board.dto.BoardResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -38,12 +35,13 @@ public class BoardController {
     }
 
     @GetMapping("/board/write")
-    public String write(){
+    public String write(Model model, BoardRequest boardRequest) {
+        model.addAttribute("request", boardRequest);
         return "board/write";
     }
 
-    @PostMapping("/write/writePro")
-    public String writePro(@ModelAttribute BoardRequest request){
+    @PostMapping("/board/write") //pro로 하지말래 수정할것
+    public String writePro(@ModelAttribute("request") BoardRequest request){
         boardService.write(request);
 
         return "redirect:/";
