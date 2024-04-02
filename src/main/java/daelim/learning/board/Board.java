@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
@@ -19,14 +20,15 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardNo;
     private String title;
-    private Integer totalPeople; //모집 인원
+    private String totalPeople; //모집 인원
     @Enumerated(EnumType.STRING)
     private StudyType studyType; // 스터디 방식(ON, OFF, BOTH)
     private String studySubject; // 스터디 과목
     private String dueDate;  // 마감일
     private String contactLink; // 오픈채팅링크
     private String content; // 본문
-    private Integer viewCount; //조회수
+    private int viewCount; //조회수
+    @CreationTimestamp
     private Date createdAt; //작성일
 
 }
