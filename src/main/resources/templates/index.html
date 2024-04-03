@@ -24,12 +24,9 @@
                     <a style="text-decoration: none;" th:href="@{/board/detail/{id}(id=${list.boardNo})}">
                         <div class="card-body p-4" style="max-height: 300px; overflow-y: auto;">
                             <div class="text-center">
-                                <h5 class="fw-bolder" th:text="${list.title}" style="color:black">Product Name</h5>
-                                <div th:text="${list.dueDate}" style="white-space: pre-line; color:black">Product
-                                    Price
-                                </div>
-                                <div th:text="${list.studySubject}" style="white-space: pre-line; color:black">Product
-                                    Price
+                                <div th:text="'마감일 | ' + ${list.dueDate}" style="text-align: left; white-space: pre-line; color:black">마감일</div>
+                                <h5 class="fw-bolder" th:text="${list.title}" style="text-align: left; color:black">제목</h5>
+                                <div th:text="${list.studySubject}" style="text-align: left;white-space: pre-line; color:black">스터디 과목
                                 </div>
                                 <br>
                                 <hr style="border-top: 1px solid dimgrey; margin-top: 10px; margin-bottom: 10px;">
@@ -105,12 +102,9 @@
                     <a style="text-decoration: none;" th:href="@{/board/detail/{id}(id=${list.boardNo})}">
                         <div class="card-body p-4" style="max-height: 300px; overflow-y: auto;">
                             <div class="text-center">
-                                <h5 class="fw-bolder" th:text="${list.title}" style="color:black">Product Name</h5>
-                                <div th:text="${list.dueDate}" style="white-space: pre-line; color:black">Product
-                                    Price
-                                </div>
-                                <div th:text="${list.studySubject}" style="white-space: pre-line; color:black">Product
-                                    Price
+                                <div th:text="'마감일 | ' + ${list.dueDate}" style="text-align: left; white-space: pre-line; color:black">마감일</div>
+                                <h5 class="fw-bolder" th:text="${list.title}" style="text-align: left; color:black">제목</h5>
+                                <div th:text="${list.studySubject}" style="text-align: left;white-space: pre-line; color:black">스터디 과목
                                 </div>
                                 <hr style="border-top: 1px solid dimgrey; margin-top: 10px; margin-bottom: 10px;">
                                 <div style="display: flex; align-items: center; justify-content: flex-end; color:black;">
