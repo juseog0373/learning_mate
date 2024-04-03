@@ -1,11 +1,11 @@
 package daelim.learning.user.dto;
 
 import daelim.learning.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jdk.jfr.StackTrace;
+import lombok.*;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class JoinRequest {
