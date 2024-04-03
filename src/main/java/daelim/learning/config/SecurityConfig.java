@@ -19,6 +19,8 @@ public class SecurityConfig {
             "/",
             "/user/**", // 요청 허가 url 목록
             "/board/**",
+            "/bootstrap/**",
+            "/image/**"
     };
 
     // SecurityFilterChain 빈 정의
