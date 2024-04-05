@@ -36,6 +36,10 @@
             border-radius: 5px;
             width: 100%;
         }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
     </style>
 <body>
 <div class="login-container">
@@ -43,6 +47,9 @@
     <form class="login-form" th:action th:object="${loginRequest}" method="post">
         <input type="text" placeholder="아이디" th:field="*{userId}" required autofocus> <br>
         <input type="password" placeholder="비밀번호" th:field="*{password}" required>
+        <div class="error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}">
+            <p th:text="${err}">아이디 또는 비밀번호를 확인해주세요.</p>
+        </div>
         <button type="submit">로그인</button>
     </form>
     <div class="text-center mt-2">

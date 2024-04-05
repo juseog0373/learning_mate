@@ -31,9 +31,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest, HttpSession session, RedirectAttributes redirectAttributes) {
-        userService.login(loginRequest, session, redirectAttributes);
-        return "redirect:/";
+    public String login(@ModelAttribute("loginRequest") LoginRequest loginRequest, HttpSession session, BindingResult bindingResult) {
+        String url = userService.login(loginRequest, session, bindingResult);
+        return url;
     }
 
     @GetMapping("/join")
@@ -46,5 +46,10 @@ public class UserController {
     public String join(@ModelAttribute("joinRequest") JoinRequest request, BindingResult bindingResult) {
         String url = userService.join(request, bindingResult);
         return url;
+    }
+
+    @GetMapping("/detail")
+    public String userDetail() {
+        return "/user/detail";
     }
 }
