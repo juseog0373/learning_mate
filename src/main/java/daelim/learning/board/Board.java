@@ -1,5 +1,6 @@
 package daelim.learning.board;
 
+import daelim.learning.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +29,13 @@ public class Board {
     private String contactLink; // 오픈채팅링크
     private String content; // 본문
     private int viewCount; //조회수
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_no")
+    private User writer; // 작성자
     @CreationTimestamp
     private Date createdAt; //작성일
 
+    public void incrementViewCount() {
+        this.viewCount += 1;
+    }
 }
