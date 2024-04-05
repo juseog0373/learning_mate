@@ -45,7 +45,7 @@
 <div class="login-container">
     <h2 class="text-center mb-4">로그인</h2>
     <form class="login-form" th:action th:object="${loginRequest}" method="post">
-        <input type="text" placeholder="아이디" th:field="*{userId}" required autofocus> <br>
+        <input type="text" placeholder="아이디" th:field="*{userId}" required> <br>
         <input type="password" placeholder="비밀번호" th:field="*{password}" required>
         <div class="error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}">
             <p th:text="${err}">아이디 또는 비밀번호를 확인해주세요.</p>

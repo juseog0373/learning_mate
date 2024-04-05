@@ -1,7 +1,7 @@
 package daelim.learning.board;
 
 import daelim.learning.board.dto.BoardRequest;
-import daelim.learning.board.dto.BoardResponse;
+import daelim.learning.board.dto.BoardListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +19,10 @@ public class BoardController {
 
     @GetMapping("/")
     public String index(Model model) {
-        // 'boardService.findAll()'이 'BoardResponse' 객체의 리스트를 반환한다고 가정
-        List<BoardResponse> sortedAndLimitedBoard = boardService.findAll().stream()
-                .sorted(Comparator.comparing(BoardResponse::getViewCount).reversed())
-                .limit(4)
-                .collect(Collectors.toList());
 
-        // 정렬된 리스트를 모델에 추가
-        model.addAttribute("topBoard", sortedAndLimitedBoard);
-
-        // 전체 게시글 리스트를 모델에 추가
+        // 조회수 top4 게시글
+        model.addAttribute("topBoard", boardService.findTopBoard());
+        // 일반 게시글 list
         model.addAttribute("allBoard", boardService.findAll());
 
         return "index";
@@ -40,7 +34,7 @@ public class BoardController {
         return "board/write";
     }
 
-    @PostMapping("/board/write") //pro로 하지말래 수정할것
+    @PostMapping("/board/write")
     public String writePro(@ModelAttribute("request") BoardRequest request){
         boardService.write(request);
 
@@ -48,18 +42,8 @@ public class BoardController {
     }
 
     @GetMapping("/board/detail/{id}")
-    public String detail(Model model, @PathVariable(name="id")Long id){
-        model.addAttribute("list",boardService.findById(id));
+    public String detail(Model model, @PathVariable(name="id") Long id) {
+        model.addAttribute("list", boardService.boardDetail(id));
         return "board/detail";
-    }
-
-    @GetMapping("/login")
-        public String login(){
-            return "/login";
-        }
-
-    @GetMapping("/join")
-    public String join(){
-        return "/join";
     }
 }
