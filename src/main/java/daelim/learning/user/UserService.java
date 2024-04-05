@@ -21,7 +21,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public String login(LoginRequest request, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String login(LoginRequest request, HttpSession session, BindingResult bindingResult) {
         String userId = request.getUserId();
         String password = request.getPassword();
 
@@ -35,9 +35,10 @@ public class UserService {
             session.setAttribute("userNo", userNo.toString()); // 세션에 사용자 이름 저장
             return "redirect:/"; // 메인 페이지로 리다이렉션
         } else {
+            System.out.println("로그인 실패");
             // 로그인 실패
-            redirectAttributes.addFlashAttribute("errorMessage", "입력하신 아이디 또는 비밀번호를 확인해주세요.");
-            return "redirect:/user/login"; // 로그인 페이지로 리다이렉션
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호를 확인해주세요.");
+            return "login"; // 로그인 페이지로 리턴
         }
     }
 
