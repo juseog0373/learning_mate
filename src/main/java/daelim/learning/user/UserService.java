@@ -1,7 +1,10 @@
 package daelim.learning.user;
 
+import daelim.learning.board.Board;
+import daelim.learning.board.dto.BoardDetailResponse;
 import daelim.learning.user.dto.JoinRequest;
 import daelim.learning.user.dto.LoginRequest;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -59,4 +62,9 @@ public class UserService {
         Optional<User> findUser = userRepository.findByUserId(userId);
         return findUser.isPresent(); // 사용자를 찾았다면 true (중복), 찾지 못했다면 false (중복 아님)
     }
+
+    public User userDetail(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다." + id));
+    }
+
 }

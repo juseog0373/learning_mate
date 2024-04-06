@@ -10,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -48,8 +45,9 @@ public class UserController {
         return url;
     }
 
-    @GetMapping("/detail")
-    public String userDetail() {
-        return "/user/detail";
+    @GetMapping("/detail/{userNo}")
+    public String detail(Model model, @PathVariable(name="userNo") Long id) {
+        model.addAttribute("list", userService.userDetail(id));
+        return "user/detail";
     }
 }
