@@ -24,7 +24,7 @@ public class SecurityConfig {
     };
 
     // SecurityFilterChain 빈 정의
-    @Bean
+/*    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 // CSRF 보호 기능을 비활성화하려면 아래 주석을 해제합니다.
@@ -37,5 +37,5 @@ public class SecurityConfig {
                 );
 
         return http.build();
-    }
+    }*/
 }
