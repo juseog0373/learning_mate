@@ -9,7 +9,8 @@
                 <li class="nav-item" style="font-weight: bold"><a class="nav-link" href="/board/write">글 작성</a></li>
             </ul>&nbsp;&nbsp;
             <div th:if="${session.userName}">
-                <a href="/user/detail" class="btn btn-group-lg" th:text="${session.userName} + '님'"></a>
+<!--                <a href="/user/detail" class="btn btn-group-lg" th:text="${session.userName} + '님'"></a>-->
+                <a th:href="@{/user/detail/{userNo}(userNo=${session.userNo})}" class="btn btn-group-lg" th:text="${session.userName} + '님'"></a>
                 <a href="/user/logout" class="btn btn-outline-dark">logout</a>
             </div>
             <div th:unless="${session.userName}">
