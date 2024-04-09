@@ -2,6 +2,8 @@ package daelim.learning.board;
 
 import daelim.learning.board.dto.BoardRequest;
 import daelim.learning.board.dto.BoardListResponse;
+import daelim.learning.reply.dto.ReplyRequest;
+import daelim.learning.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +17,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BoardController {
 
-    private final BoardService boardService;
+    private final BoardService boardService; // 스프링 빈 컨테이너에 등록되어있는 스프링 빈 기본 생성자에 빈 싱글톤이 유지된다
+    private final ReplyService replyService;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -30,7 +33,7 @@ public class BoardController {
 
     @GetMapping("/board/write")
     public String write(Model model, BoardRequest boardRequest) {
-        model.addAttribute("request", boardRequest);
+        model.addAttribute("boardRequest", boardRequest);
         return "board/write";
     }
 
@@ -41,9 +44,12 @@ public class BoardController {
         return "redirect:/";
     }
 
-    @GetMapping("/board/detail/{id}")
-    public String detail(Model model, @PathVariable(name="id") Long id) {
-        model.addAttribute("list", boardService.boardDetail(id));
+    @GetMapping("/board/detail/{boardNo}")
+    public String detail(Model model, @PathVariable(name="boardNo") Long boardNo, ReplyRequest replyRequest) {
+        model.addAttribute("boardList", boardService.boardDetail(boardNo));
+        model.addAttribute("replyRequest", replyRequest);
+        model.addAttribute("replyList", replyService.findAll());
+        
         return "board/detail";
     }
 }

@@ -35,7 +35,7 @@ public class UserService {
             String userName = findUser.get().getUserName();
             Long userNo = findUser.get().getUserNo();
             session.setAttribute("userName", userName); // 세션에 사용자 이름 저장
-            session.setAttribute("userNo", userNo.toString()); // 세션에 사용자 이름 저장
+            session.setAttribute("userNo", userNo); // 세션에 사용자 이름 저장
             return "redirect:/"; // 메인 페이지로 리다이렉션
         } else {
             System.out.println("로그인 실패");
