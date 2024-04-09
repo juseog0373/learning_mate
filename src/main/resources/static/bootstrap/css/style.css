@@ -82,3 +82,21 @@
 #contentBox {
     font-size: 18px; /* 텍스트 크기를 18px로 설정 */
 }
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-wrap {
+    flex: 1;
+}
+
+footer{
+    margin-bottom: 0px;
+}
