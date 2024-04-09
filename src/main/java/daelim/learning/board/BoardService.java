@@ -37,13 +37,14 @@ public class BoardService {
         boardRepository.save(request.toEntity());
     }
 
-    public BoardDetailResponse boardDetail(Long id) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
+    public BoardDetailResponse boardDetail(Long boardNo) {
+        Board board = boardRepository.findById(boardNo).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
 
         board.incrementViewCount(); // 조회수 1 증가
         boardRepository.save(board); // 변경된 조회수 저장
 
         return BoardDetailResponse.builder()
+                .boardNo(board.getBoardNo())
                 .title(board.getTitle())
                 .contactLink(board.getContactLink())
                 .studySubject(board.getStudySubject())
