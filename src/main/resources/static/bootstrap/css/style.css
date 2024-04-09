@@ -100,3 +100,20 @@ body {
 footer{
     margin-bottom: 0px;
 }
+
+.card-body .truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    height: 100%; /* 필요에 따라 조절 */
+}
+
+.card {
+    height: 100%; /* 카드 높이 고정 */
+}

@@ -30,7 +30,7 @@
 
             <!-- 댓글 입력 -->
             <form id="commentForm" th:action="@{/board/detail/reply/{boardNo}(boardNo = ${boardList.boardNo})}" th:object="${replyRequest}"  th:method="POST">
-                <div class="mb-3">-->
+                <div class="mb-3">
                     <textarea class="form-control" id="commentText"  th:field="*{comment}" rows="3" placeholder="여기에 작성해주세요 ..."></textarea>
                 </div>
                 <div class="text-end">
@@ -44,20 +44,15 @@
                     <div class="comment">
                         <p class="comment-author" th:text="${reply.writer}">작성자 이름</p>
                         <p class="comment-content" th:text="${reply.comment}">댓글 내용</p>
-
-                        <div class="text-end" th:if="${session.userName}"> <!-- 세션이 있을 경우 -->
+                        <div class="text-end" th:if="${session.userName}">
                             <button type="submit" class="btn btn-outline-dark">삭제</button>
                         </div>
-
                         <br><br>
-
                         <hr>
                     </div>
                 </div>
-                <!-- 서버에서 댓글 목록을 받아올 때 사용하는 Thymeleaf 문법으로 작성된 예시. 데이터와 연동 필요 -->
             </div>
         </div>
-        <!-- 댓글 섹션 끝 -->
     </div>
 </div><br><br><br><br>
 <footer class="py-5 bg-dark">
