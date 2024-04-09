@@ -2,25 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <div th:replace="layout/head :: head"></div>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .content-wrap {
-            flex: 1;
-        }
-
-        footer{
-            margin-bottom: 0px;
-        }
-    </style>
 </head>
 <body>
 <div class="content-wrap" th:replace="layout/nav :: nav"></div>
