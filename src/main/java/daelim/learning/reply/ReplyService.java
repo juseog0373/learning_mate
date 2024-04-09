@@ -1,13 +1,9 @@
-package daelim.learning.reply.service;
+package daelim.learning.reply;
 
 import daelim.learning.board.Board;
-import daelim.learning.board.BoardRepository;
-import daelim.learning.reply.Reply;
-import daelim.learning.reply.ReplyRepository;
 import daelim.learning.reply.dto.ReplyListResponse;
 import daelim.learning.reply.dto.ReplyRequest;
 import daelim.learning.user.User;
-import daelim.learning.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +22,8 @@ public class ReplyService {
         replyRepository.save(reply);
     }
 
-    public List<ReplyListResponse> findAll() {
-
-        return replyRepository.findAll().stream().map(
+    public List<ReplyListResponse> findAll(Long boardNo) {
+        return replyRepository.findByBoardNoBoardNo(boardNo).stream().map(
                 reply -> ReplyListResponse.builder()
                         .comment(reply.getComment())
                         .user(reply.getUserNo())
@@ -36,7 +31,7 @@ public class ReplyService {
         ).toList();
     }
 
-    public void remove(Long id) {
-        replyRepository.deleteById(id);
+    public void delete(Long replyNo) {
+        replyRepository.deleteById(replyNo);
     }
 }
