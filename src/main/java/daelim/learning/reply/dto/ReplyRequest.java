@@ -10,6 +10,7 @@ import java.util.Optional;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ReplyRequest {
 
     private String comment;

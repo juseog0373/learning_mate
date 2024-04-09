@@ -1,13 +1,13 @@
 package daelim.learning.reply.dto;
 import daelim.learning.user.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+
 public class ReplyListResponse {
 
     private String comment;
@@ -19,7 +19,7 @@ public class ReplyListResponse {
         if (user != null) {
             this.writer = user.getUserName();
         } else {
-            this.writer = "Unknown";
+            throw new EntityNotFoundException("사용자가 없습니다.");
         }
     }
 }
