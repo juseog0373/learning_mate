@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class BoardDetailResponse {
+    private Long boardNo;
     private String title;
     private String studySubject;
     private String studyType;
