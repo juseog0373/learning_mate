@@ -1,17 +1,12 @@
 package daelim.learning.board;
 
 import daelim.learning.board.dto.BoardRequest;
-import daelim.learning.board.dto.BoardListResponse;
+import daelim.learning.reply.ReplyService;
 import daelim.learning.reply.dto.ReplyRequest;
-import daelim.learning.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -48,7 +43,7 @@ public class BoardController {
     public String detail(Model model, @PathVariable(name="boardNo") Long boardNo, ReplyRequest replyRequest) {
         model.addAttribute("boardList", boardService.boardDetail(boardNo));
         model.addAttribute("replyRequest", replyRequest);
-        model.addAttribute("replyList", replyService.findAll());
+        model.addAttribute("replyList", replyService.findAll(boardNo));
         
         return "board/detail";
     }
