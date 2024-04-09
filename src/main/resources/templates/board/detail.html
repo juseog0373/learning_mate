@@ -5,22 +5,22 @@
 <div th:replace="layout/nav :: nav"></div>
 
 <div class="container mt-5">
-    <h1 class="detail-header" th:text="${list.title}">Study Title</h1><br>
+    <h1 class="detail-header" th:text="${boardList.title}">Study Title</h1><br>
     <hr>
     <br><br>
     <div class="detail-info">
-        <div><dt>스터디 과목</dt>&nbsp;&nbsp;<dd th:text="${list.studySubject}">Subject</dd></div>
-        <div><dt>진행 방식</dt>&nbsp;&nbsp;<dd th:text="${list.studyType}">Type</dd></div>
-        <div><dt>모집 인원</dt>&nbsp;&nbsp;<dd th:text="${list.totalPeople}">0</dd></div>
-        <div><dt>마감 날짜</dt>&nbsp;&nbsp;<dd th:text="${list.dueDate}">2023-01-01</dd></div>
-        <div><dt>연락 방법</dt>&nbsp;&nbsp;<dd><a th:href="${list.contactLink}" th:text="${list.contactLink}" class="detail-link">Open Chat</a></dd></div>
+        <div><dt>스터디 과목</dt>&nbsp;&nbsp;<dd th:text="${boardList.studySubject}">Subject</dd></div>
+        <div><dt>진행 방식</dt>&nbsp;&nbsp;<dd th:text="${boardList.studyType}">Type</dd></div>
+        <div><dt>모집 인원</dt>&nbsp;&nbsp;<dd th:text="${boardList.totalPeople}">0</dd></div>
+        <div><dt>마감 날짜</dt>&nbsp;&nbsp;<dd th:text="${boardList.dueDate}">2023-01-01</dd></div>
+        <div><dt>연락 방법</dt>&nbsp;&nbsp;<dd><a th:href="${boardList.contactLink}" th:text="${boardList.contactLink}" class="detail-link">Open Chat</a></dd></div>
     </div>
     <br><br><br><br>
     <div>
         <div>
             <h3 style="text-align: left; font-weight: bold;">스터디 소개</h3>
             <hr>
-            <div id="contentBox" th:text="${list.content}">Content here</div>
+            <div id="contentBox" th:text="${boardList.content}">Content here</div>
             <hr>
         </div><br><br>
         <!-- 댓글 섹션 시작 -->
@@ -28,22 +28,29 @@
             <h3 style="text-align: left; font-weight: bold;">댓글</h3>
             <hr>
 
-            <!-- 댓글 입력 폼 -->
-            <form id="commentForm" action="#" method="POST">
-                <div class="mb-3">
-                    <textarea class="form-control" id="commentText" name="comment" rows="3" placeholder="여기에 작성해주세요 ..."></textarea>
+            <!-- 댓글 입력 -->
+            <form id="commentForm" th:action="@{/board/detail/reply/{boardNo}(boardNo = ${boardList.boardNo})}" th:object="${replyRequest}"  th:method="POST">
+                <div class="mb-3">-->
+                    <textarea class="form-control" id="commentText"  th:field="*{comment}" rows="3" placeholder="여기에 작성해주세요 ..."></textarea>
                 </div>
                 <div class="text-end">
                     <button type="submit" class="btn btn-outline-dark">등록</button>
                 </div><br><br>
             </form>
 
-            <!-- 제출된 댓글을 보여주는 영역 (예시) -->
+            <!-- 제출된 댓글을 보여주는 영역 -->
             <div class="submitted-comments mt-4">
-                <div th:each="comment : ${comments}">
+                <div th:each="reply : ${replyList}">
                     <div class="comment">
-                        <p class="comment-author" th:text="${comment.author}">작성자 이름</p>
-                        <p class="comment-content" th:text="${comment.content}">댓글 내용</p>
+                        <p class="comment-author" th:text="${reply.writer}">작성자 이름</p>
+                        <p class="comment-content" th:text="${reply.comment}">댓글 내용</p>
+
+                        <div class="text-end" th:if="${session.userName}"> <!-- 세션이 있을 경우 -->
+                            <button type="submit" class="btn btn-outline-dark">삭제</button>
+                        </div>
+
+                        <br><br>
+
                         <hr>
                     </div>
                 </div>
