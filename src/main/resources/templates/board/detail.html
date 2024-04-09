@@ -3,16 +3,17 @@
 <div th:replace="layout/head :: head"></div>
 <body>
 <div th:replace="layout/nav :: nav"></div>
-
 <div class="container mt-5">
     <h1 class="detail-header" th:text="${boardList.title}">Study Title</h1><br>
     <hr>
     <br><br>
     <div class="detail-info">
+        <input type="hidden" id="loginStatus" th:value="${session.userName != null ? 'logged-in' : 'not-logged-in'}" />
         <div><dt>스터디 과목</dt>&nbsp;&nbsp;<dd th:text="${boardList.studySubject}">Subject</dd></div>
+        <div><dt>작성자</dt>&nbsp;&nbsp;<dd th:text="${boardList.writer.userName}">Subject</dd></div>
         <div><dt>진행 방식</dt>&nbsp;&nbsp;<dd th:text="${boardList.studyType}">Type</dd></div>
         <div><dt>모집 인원</dt>&nbsp;&nbsp;<dd th:text="${boardList.totalPeople}">0</dd></div>
-        <div><dt>마감 날짜</dt>&nbsp;&nbsp;<dd th:text="${boardList.dueDate}">2023-01-01</dd></div>
+        <div><dt>마감 일자</dt>&nbsp;&nbsp;<dd th:text="${boardList.dueDate}">2023-01-01</dd></div>
         <div><dt>연락 방법</dt>&nbsp;&nbsp;<dd><a th:href="${boardList.contactLink}" th:text="${boardList.contactLink}" class="detail-link">Open Chat</a></dd></div>
     </div>
     <br><br><br><br>
@@ -29,12 +30,12 @@
             <hr>
 
             <!-- 댓글 입력 -->
-            <form id="commentForm" th:action="@{/board/detail/reply/{boardNo}(boardNo = ${boardList.boardNo})}" th:object="${replyRequest}"  th:method="POST">
+            <form id="commentForm" th:action="@{/board/detail/reply/{boardNo}(boardNo = ${boardList.boardNo})}" th:object="${replyRequest}" th:method="post">
                 <div class="mb-3">
-                    <textarea class="form-control" id="commentText"  th:field="*{comment}" rows="3" placeholder="여기에 작성해주세요 ..."></textarea>
+                    <textarea class="form-control" id="commentText" th:field="*{comment}" rows="3" placeholder="여기에 작성해주세요 ..."></textarea>
                 </div>
                 <div class="text-end">
-                    <button type="submit" class="btn btn-outline-dark">등록</button>
+                    <button type="button" class="btn btn-outline-dark" onclick="isSessionExistFormAction(submitCommentForm)">등록</button>
                 </div><br><br>
             </form>
 

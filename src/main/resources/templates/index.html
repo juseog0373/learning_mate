@@ -49,6 +49,7 @@
 </header>
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
+        <input type="hidden" id="loginStatus" th:value="${session.userName != null ? 'logged-in' : 'not-logged-in'}" />
         <h3 style="text-align: left; font-weight: bold">인기글🔥</h3><br>
         <!-- 상위 4개 인기글 표시 -->
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
@@ -70,7 +71,7 @@
                             <hr style="border-top: 1px solid dimgrey; margin-bottom: 10px; margin-right: 20px; margin-left: 20px;">
                             <div style="display: flex; align-items: center; justify-content: flex-end; color:black; margin-bottom: 15px; margin-top: 15px;">
                                 <div style="text-align: left; font-weight: bold; margin-right: auto;">
-                                    <span style="font-size: 1rem; margin-left: 20px;">😀 문채현</span>
+                                    <span style="font-size: 1rem; margin-left: 20px;" th:text="'🙋🏻‍ '+${list.writer.userName}">😀작성자</span>
                                 </div>
                                 <img src="/image/조회수.png" alt="조회수" style="width: 20px; height: 20px;">
                                 <span style="margin-right: 20px;" th:text="${list.viewCount}"></span>
@@ -125,7 +126,7 @@
                             <hr style="border-top: 1px solid dimgrey; margin-bottom: 10px; margin-right: 20px; margin-left: 20px;">
                             <div style="display: flex; align-items: center; justify-content: flex-end; color:black; margin-bottom: 15px; margin-top: 15px;">
                                 <div style="text-align: left; font-weight: bold; margin-right: auto;">
-                                    <span style="font-size: 1rem; margin-left: 20px;">😀 문채현</span>
+                                    <span style="font-size: 1rem; margin-left: 20px;" th:text="'🙋🏻‍ '+${list.writer.userName}">작성자</span>
                                 </div>
                                 <img src="/image/조회수.png" alt="조회수" style="width: 20px; height: 20px;">
                                 <span style="margin-right: 20px;" th:text="${list.viewCount}"></span>
