@@ -1,6 +1,59 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="layout/head :: head"></div>
+<head>
+    <div th:replace="layout/head :: head"></div>
+    <style>
+        .card-body .truncate {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+            height: 100%; /* 필요에 따라 조절 */
+        }
+
+        .card {
+            height: 100%; /* 카드 높이 고정 */
+        }
+
+        .select-container select {
+            width: 130px;
+            padding-right: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            cursor: pointer;
+            border-radius: 20px;
+            border: 2px solid black;
+            padding: 0.375rem 0.75rem;
+        }
+
+        .select-container select:hover {
+            color: gray;
+        }
+
+        .select-container i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .search-input {
+            float: right;
+            border-radius: 20px;
+            border: 2px solid black;
+            padding: 0.375rem 0.75rem;
+        }
+    </style>
+</head>
 <body>
 <div th:replace="layout/nav :: nav"></div>
 <header class="bg-dark py-5">
@@ -16,21 +69,28 @@
         <h3 style="text-align: left; font-weight: bold">인기글🔥</h3><br>
         <!-- 상위 4개 인기글 표시 -->
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div th:each="list, stat : ${topBoard}" class="col mb-5">
-                <div class="card h-100">
+            <div th:each="list : ${topBoard}" class="col mb-5">
+                <div class="card h-100" style="position: relative;">
+                    <div style="display: flex; justify-content: flex-end; margin-top: 15px; margin-right: 15px;">
+                        <a href="#" style="text-decoration: none; color: inherit;">
+                            <img src="/image/like2.png" alt="찜" style="width: 35px; height: 35px;">
+                        </a>
+                    </div>
                     <a style="text-decoration: none;" th:href="@{/board/detail/{id}(id=${list.boardNo})}">
-                        <div class="card-body p-4" style="max-height: 300px; overflow-y: auto;">
+                        <div class="card-body p-4">
                             <div class="text-center">
                                 <div th:text="'마감일 | ' + ${list.dueDate}" style="text-align: left; white-space: pre-line; color:black">마감일</div>
-                                <h5 class="fw-bolder" th:text="${list.title}" style="text-align: left; color:black">제목</h5>
-                                <div th:text="${list.studySubject}" style="text-align: left;white-space: pre-line; color:black">스터디 과목
+                                <h5 class="fw-bolder title-truncate" th:text="${list.title}" style="text-align: left; color:black">제목</h5>
+                            </div>
+                        </div><br><br>
+                        <div style="position: absolute; bottom: 0; left: 0; width: 100%;">
+                            <hr style="border-top: 1px solid dimgrey; margin-bottom: 10px; margin-right: 20px; margin-left: 20px;">
+                            <div style="display: flex; align-items: center; justify-content: flex-end; color:black; margin-bottom: 15px; margin-top: 15px;">
+                                <div style="text-align: left; font-weight: bold; margin-right: auto;">
+                                    <span style="font-size: 1rem; margin-left: 20px;">😀 문채현</span>
                                 </div>
-                                <br>
-                                <hr style="border-top: 1px solid dimgrey; margin-top: 10px; margin-bottom: 10px;">
-                                <div style="display: flex; align-items: center; justify-content: flex-end; color:black;">
-                                    <img src="/image/조회수.png" alt="조회수" style="width: 20px; height: 20px; ">
-                                    <span th:text="${list.viewCount}"></span>
-                                </div>
+                                <img src="/image/조회수.png" alt="조회수" style="width: 20px; height: 20px;">
+                                <span style="margin-right: 20px;" th:text="${list.viewCount}"></span>
                             </div>
                         </div>
                     </a>
@@ -40,74 +100,52 @@
 
         <h3 style="text-align: left; font-weight: bold">전체 게시글</h3>
         <div class="select-container" style="position: relative; display: inline-block;">
-            <select class="form-control" id="studyType" name="studyType"
-                    style="width: 130px; padding-right: 30px; font-size: 14px; font-weight: bold; -webkit-appearance: none; -moz-appearance: none; appearance: none; cursor: pointer; border-radius: 20px; border: 2px solid black; padding: 0.375rem 0.75rem;"
-                    onmouseover="this.style.color='gray'" onmouseout="this.style.color='black'">
+            <select class="form-control" id="studyType" name="studyType">
                 <option value="" disabled selected>진행 방식</option>
                 <option value="ALL">전체</option>
                 <option value="ON">온라인</option>
                 <option value="OFF">오프라인</option>
                 <option value="BOTH">온/오프라인</option>
             </select>
-            <i class="bi bi-chevron-down"
-               style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;"></i>
+            <i class="bi bi-chevron-down"></i>
         </div>&nbsp;
 
         <div class="select-container" style="position: relative; display: inline-block;">
-            <select class="form-control" id="studySubject" name="studyType"
-                    style="width: 130px; padding-right: 30px; font-size: 14px; font-weight: bold; -webkit-appearance: none; -moz-appearance: none; appearance: none; cursor: pointer; border-radius: 20px; border: 2px solid black; padding: 0.375rem 0.75rem;"
-                    onmouseover="this.style.color='gray'" onmouseout="this.style.color='black'">
+            <select class="form-control" id="studySubject" name="studyType">
                 <option value="" disabled selected>스터디 과목</option>
                 <option value="A">A</option>
                 <option value="B">B</option>
                 <option value="C">C</option>
                 <option value="D">D</option>
             </select>
-            <i class="bi bi-chevron-down"
-               style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none;"></i>
+            <i class="bi bi-chevron-down"></i>
         </div>
 
-        <input type="text" placeholder="🔍 검색어를 입력하세요"
-               style="float: right; border-radius: 20px; border: 2px solid black; padding: 0.375rem 0.75rem;">
-
-        <!--<li class="nav-item dropdown" style="display: inline-block; margin-right: 5px;">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-               style="color:black; font-weight: bold; font-size: 0.9em; border: 1px solid gray; border-radius: 20px; padding: 5px 10px;"
-               onmouseover="this.style.color='gray'"
-               onmouseout="this.style.color='black'">스터디 과목</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                <li><a class="dropdown-item" href="#!">자유 게시판</a></li>
-                <li><a class="dropdown-item" href="#!">HOT 게시글</a></li>
-                <li><a class="dropdown-item" href="#!">취업·진로 게시판</a></li>
-            </ul>
-        </li>
-        <li class="nav-item dropdown" style="display: inline-block; margin-right: 5px;">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-               style="color:black; font-weight: bold; font-size: 0.9em; border: 1px solid gray; border-radius: 20px; padding: 5px 10px;"
-               onmouseover="this.style.color='gray'"
-               onmouseout="this.style.color='black'">진행 방식</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                <li><a class="dropdown-item" href="#!">온라인</a></li>
-                <li><a class="dropdown-item" href="#!">오프라인</a></li>
-                <li><a class="dropdown-item" href="#!">온/오프라인</a></li>
-            </ul>
-        </li>-->
+        <input type="text" class="search-input" placeholder="🔍 검색어를 입력하세요">
         <br><br>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <div th:each="list : ${allBoard}" class="col mb-5">
-                <div class="card h-100">
+                <div class="card h-100" style="position: relative;">
+                    <div style="display: flex; justify-content: flex-end; margin-top: 15px; margin-right: 15px;">
+                        <a href="#" style="text-decoration: none; color: inherit;">
+                            <img src="/image/like2.png" alt="찜" style="width: 35px; height: 35px;">
+                        </a>
+                    </div>
                     <a style="text-decoration: none;" th:href="@{/board/detail/{id}(id=${list.boardNo})}">
-                        <div class="card-body p-4" style="max-height: 300px; overflow-y: auto;">
+                        <div class="card-body p-4">
                             <div class="text-center">
                                 <div th:text="'마감일 | ' + ${list.dueDate}" style="text-align: left; white-space: pre-line; color:black">마감일</div>
-                                <h5 class="fw-bolder" th:text="${list.title}" style="text-align: left; color:black">제목</h5>
-                                <div th:text="${list.studySubject}" style="text-align: left;white-space: pre-line; color:black">스터디 과목
+                                <h5 class="fw-bolder title-truncate" th:text="${list.title}" style="text-align: left; color:black">제목</h5>
+                            </div>
+                        </div><br><br>
+                        <div style="position: absolute; bottom: 0; left: 0; width: 100%;">
+                            <hr style="border-top: 1px solid dimgrey; margin-bottom: 10px; margin-right: 20px; margin-left: 20px;">
+                            <div style="display: flex; align-items: center; justify-content: flex-end; color:black; margin-bottom: 15px; margin-top: 15px;">
+                                <div style="text-align: left; font-weight: bold; margin-right: auto;">
+                                    <span style="font-size: 1rem; margin-left: 20px;">😀 문채현</span>
                                 </div>
-                                <hr style="border-top: 1px solid dimgrey; margin-top: 10px; margin-bottom: 10px;">
-                                <div style="display: flex; align-items: center; justify-content: flex-end; color:black;">
-                                    <img src="/image/조회수.png" alt="조회수" style="width: 20px; height: 20px; ">
-                                    <span th:text="${list.viewCount}"></span>
-                                </div>
+                                <img src="/image/조회수.png" alt="조회수" style="width: 20px; height: 20px;">
+                                <span style="margin-right: 20px;" th:text="${list.viewCount}"></span>
                             </div>
                         </div>
                     </a>
@@ -119,9 +157,23 @@
 <footer class="py-5 bg-dark">
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Learning_Mate 2024</p></div>
 </footer>
-<script src="/bootstrap/js/scripts.js"></script>
-</div>
-</div>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 모든 .title-truncate 요소를 선택
+        var titles = document.querySelectorAll('.title-truncate');
+
+        // 각 요소에 대해 실행
+        titles.forEach(function(title) {
+            var text = title.innerText;
+
+            // 텍스트가 22자를 초과하면, 22자에서 잘라내고 "..." 추가
+            if (text.length > 22) {
+                title.innerText = text.substring(0, 22) + '...';
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
