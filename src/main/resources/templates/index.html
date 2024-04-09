@@ -54,24 +54,29 @@
         <!-- 상위 4개 인기글 표시 -->
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <div th:each="list : ${topBoard}" class="col mb-5">
-                <div class="card h-100" style="position: relative;">
-                    <div style="display: flex; justify-content: flex-end; margin-top: 15px; margin-right: 15px;">
-                        <a href="#" style="text-decoration: none; color: inherit;">
-                            <img src="/image/like2.png" alt="찜" style="width: 35px; height: 35px;">
-                        </a>
+                <div class="card h-100" style="position: relative; border-radius: 20px">
+                    <div style="display: flex; align-items: center; margin-top: 15px; margin-right: 0px;">
+                        <div style="border-radius: 15px; padding: 3px 8px; border: 2px solid #b02a37; margin-left: 20px; color: #b02a37; font-size: 13px; font-weight: bold">
+                            마감 0일전
+                        </div>
+                        <div style="margin-left: auto;">
+                            <a href="#" style="text-decoration: none; color: inherit;">
+                                <img src="/image/like2.png" alt="찜" style="width: 35px; height: 35px;">
+                            </a>
+                        </div>
                     </div>
                     <a style="text-decoration: none;" th:href="@{/board/detail/{id}(id=${list.boardNo})}">
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <div th:text="'마감일 | ' + ${list.dueDate}" style="text-align: left; white-space: pre-line; color:black">마감일</div>
-                                <h5 class="fw-bolder title-truncate" th:text="${list.title}" style="text-align: left; color:black">제목</h5>
+                                <div th:text="'마감일 | ' + ${list.dueDate}" style="text-align: left; white-space: pre-line; color:black; margin-bottom: 10px; font-size: 14px; color: dimgrey;">마감일</div>
+                                <h5 class="fw-bolder title-truncate" th:text="${list.title}" style="text-align: left; color:black; font-weight: bold; font-size: 23px">제목</h5>
                             </div>
                         </div><br><br>
                         <div style="position: absolute; bottom: 0; left: 0; width: 100%;">
                             <hr style="border-top: 1px solid dimgrey; margin-bottom: 10px; margin-right: 20px; margin-left: 20px;">
                             <div style="display: flex; align-items: center; justify-content: flex-end; color:black; margin-bottom: 15px; margin-top: 15px;">
                                 <div style="text-align: left; font-weight: bold; margin-right: auto;">
-                                    <span style="font-size: 1rem; margin-left: 20px;" th:text="'🙋🏻‍ '+${list.writer.userName}">😀작성자</span>
+                                    <span style="font-size: 1rem; margin-left: 20px;" th:text="'🙋🏻‍ '+${list.writer.userName}">작성자</span>
                                 </div>
                                 <img src="/image/조회수.png" alt="조회수" style="width: 20px; height: 20px;">
                                 <span style="margin-right: 20px;" th:text="${list.viewCount}"></span>
@@ -107,19 +112,31 @@
 
         <input type="text" class="search-input" placeholder="🔍 검색어를 입력하세요">
         <br><br>
+
+        <!-- 전체 게시글 -->
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div th:each="list : ${allBoard}" class="col mb-5">
-                <div class="card h-100" style="position: relative;">
-                    <div style="display: flex; justify-content: flex-end; margin-top: 15px; margin-right: 15px;">
-                        <a href="#" style="text-decoration: none; color: inherit;">
-                            <img src="/image/like2.png" alt="찜" style="width: 35px; height: 35px;">
-                        </a>
+            <div th:each="list, iterStat : ${allBoard}" class="col mb-5">
+                <div class="card h-100" style="position: relative; border-radius: 20px">
+                    <div style="display: flex; align-items: center; margin-top: 15px; margin-right: 0px;">
+                        <!-- 따끈따끈 최신글 -->
+                        <div th:if="${iterStat.count &lt;= 4}" style="border-radius: 15px; padding: 3px 8px; background-color: #fff3cd; border: 2px solid orange; margin-left: 10px; color: darkorange; font-size: 13px; font-weight: bold">
+                            따끈따끈 최신글
+                        </div>
+                        <!-- 인기글 -->
+                        <div th:if="${list.viewCount &gt; 799}" style="margin-left: 10px; margin-right: 10px; border-radius: 15px; padding: 3px 8px; background-color: #b6effb; color: blue; font-size: 13px; font-weight: bold;">
+                            💙 인기
+                        </div>
+                        <div style="margin-left: auto;">
+                            <a href="#" style="text-decoration: none; color: inherit;">
+                                <img src="/image/like2.png" alt="찜" style="width: 35px; height: 35px;">
+                            </a>
+                        </div>
                     </div>
                     <a style="text-decoration: none;" th:href="@{/board/detail/{id}(id=${list.boardNo})}">
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <div th:text="'마감일 | ' + ${list.dueDate}" style="text-align: left; white-space: pre-line; color:black">마감일</div>
-                                <h5 class="fw-bolder title-truncate" th:text="${list.title}" style="text-align: left; color:black">제목</h5>
+                                <div th:text="'마감일 | ' + ${list.dueDate}" style="text-align: left; white-space: pre-line; color:black; margin-bottom: 10px; font-size: 14px; color: dimgrey;">마감일</div>
+                                <h5 class="fw-bolder title-truncate" th:text="${list.title}" style="text-align: left; color:black; font-weight: bold; font-size: 23px">제목</h5>
                             </div>
                         </div><br><br>
                         <div style="position: absolute; bottom: 0; left: 0; width: 100%;">
