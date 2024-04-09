@@ -12,18 +12,17 @@ import java.time.LocalDateTime;
 
 import static jakarta.persistence.FetchType.LAZY;
 
-@Table(name = "tb_comment")
+@Table(name = "tb_reply")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Builder
 @AllArgsConstructor
 public class Reply {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "comment_no")
-    private Long id;
+    @Column(name = "reply_no")
+    private Long replyNo;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_no")
@@ -38,7 +37,7 @@ public class Reply {
     private String comment;
 
     @CreationTimestamp
-    @Column(name = "create_at")
-    private LocalDateTime createTime;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
 }
