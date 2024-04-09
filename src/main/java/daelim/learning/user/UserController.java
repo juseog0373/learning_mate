@@ -33,6 +33,12 @@ public class UserController {
         return url;
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
+
     @GetMapping("/join")
     public String joinForm(Model model, JoinRequest joinRequest) {
         model.addAttribute("joinRequest", joinRequest);
