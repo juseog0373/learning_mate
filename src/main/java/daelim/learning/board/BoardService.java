@@ -45,6 +45,7 @@ public class BoardService {
 
         return BoardDetailResponse.builder()
                 .boardNo(board.getBoardNo())
+                .writer(board.getWriter())
                 .title(board.getTitle())
                 .contactLink(board.getContactLink())
                 .studySubject(board.getStudySubject())

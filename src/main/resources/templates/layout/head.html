@@ -28,4 +28,33 @@
             margin-right: 10px;
         }
     </style>
+    <script>
+        function isSessionExist(redirectUrl) {
+            var loginStatus = document.getElementById('loginStatus').value;
+
+            if (loginStatus === 'not-logged-in') {
+                alert("로그인 이후 이용 가능합니다.");
+                window.location.href = "/user/login";
+            } else {
+                window.location.href = redirectUrl;
+            }
+        }
+
+        function isSessionExistFormAction(actionFunction) {
+            var loginStatus = document.getElementById('loginStatus').value;
+
+            if (loginStatus === 'not-logged-in') {
+                alert("로그인 이후 이용 가능합니다.");
+                window.location.href = "/user/login"; // 로그인 페이지로 리다이렉트
+            } else if (typeof actionFunction === 'function') {
+                actionFunction(); // 세션이 있을 경우 지정된 함수 실행
+            }
+        }
+    </script>
+
+    <script>
+        function submitCommentForm() {
+            document.getElementById("commentForm").submit();
+        }
+    </script>
 </head>
