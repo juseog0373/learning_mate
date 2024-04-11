@@ -3,6 +3,7 @@ package daelim.learning.board;
 import daelim.learning.board.dto.BoardRequest;
 import daelim.learning.reply.ReplyService;
 import daelim.learning.reply.dto.ReplyRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,8 +34,8 @@ public class BoardController {
     }
 
     @PostMapping("/board/write")
-    public String writePro(@ModelAttribute("request") BoardRequest request){
-        boardService.write(request);
+    public String writePro(@ModelAttribute("request") BoardRequest request, HttpSession session){
+        boardService.write(request, session);
 
         return "redirect:/";
     }
