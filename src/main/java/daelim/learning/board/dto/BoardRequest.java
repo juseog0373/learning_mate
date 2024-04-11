@@ -2,6 +2,7 @@ package daelim.learning.board.dto;
 
 import daelim.learning.board.Board;
 import daelim.learning.board.StudyType;
+import daelim.learning.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class BoardRequest {
     private String title;
     private String content;
     private int viewCount=0;
+    private User writer;
 
     public Board toEntity() {
         return Board.builder()
@@ -32,6 +34,7 @@ public class BoardRequest {
                 .dueDate(dueDate)
                 .contactLink(contactLink)
                 .title(title)
+                .writer(writer)
                 .content(content)
                 .viewCount(viewCount)
                 .build();
