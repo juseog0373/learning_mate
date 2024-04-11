@@ -3,13 +3,17 @@ package daelim.learning.board;
 import daelim.learning.board.dto.BoardDetailResponse;
 import daelim.learning.board.dto.BoardRequest;
 import daelim.learning.board.dto.BoardListResponse;
+import daelim.learning.user.User;
+import daelim.learning.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,6 +22,7 @@ import java.util.stream.Collectors;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
 
     public List<BoardListResponse> findTopBoard() {
         return boardRepository.findAllByOrderByViewCountDesc().stream()
@@ -33,7 +38,10 @@ public class BoardService {
     }
 
     //글 작성
-    public void write(BoardRequest request){
+    public void write(BoardRequest request, HttpSession session) {
+        Long userNo = (Long) session.getAttribute("userNo");
+        User writer = userRepository.findById(userNo).orElseThrow(() -> new EntityNotFoundException("not found user"));
+        request.setWriter(writer);
         boardRepository.save(request.toEntity());
     }
 
