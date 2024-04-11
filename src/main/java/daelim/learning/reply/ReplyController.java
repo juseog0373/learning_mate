@@ -21,14 +21,12 @@ import java.util.Optional;
 public class ReplyController {
 
     private final ReplyService replyService;
-    private final ReplyRepository replyRepository;
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
 
     // 댓글 작성
     @PostMapping("/board/detail/reply/{boardNo}")
     public String write(@PathVariable(name="boardNo") Long boardNo, ReplyRequest request, HttpSession session) throws NullPointerException {
-
         Long userNo = (Long) session.getAttribute("userNo");
 
         User writer = userRepository.findById(userNo).orElseThrow(() -> new IllegalArgumentException("not found userNo = "+userNo));
