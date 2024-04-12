@@ -1,8 +1,8 @@
 package daelim.learning.board;
 
-import daelim.learning.board.dto.BoardDetailResponse;
-import daelim.learning.board.dto.BoardRequest;
-import daelim.learning.board.dto.BoardListResponse;
+import daelim.learning.board.dto.*;
+import daelim.learning.reply.Reply;
+import daelim.learning.reply.ReplyRepository;
 import daelim.learning.user.User;
 import daelim.learning.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,6 +23,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
+    private final ReplyRepository replyRepository;
 
     public List<BoardListResponse> findTopBoard() {
         return boardRepository.findAllByOrderByViewCountDesc().stream()
@@ -45,7 +46,7 @@ public class BoardService {
         boardRepository.save(request.toEntity());
     }
 
-    public BoardDetailResponse boardDetail(Long boardNo) {
+    public BoardDetailResponse detailBoard(Long boardNo) {
         Board board = boardRepository.findById(boardNo).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
 
         board.incrementViewCount(); // 조회수 1 증가
@@ -65,4 +66,25 @@ public class BoardService {
                 .build();
     }
 
+    public BoardDetailResponse updateBoard(BoardUpdateRequest request) {
+        Board findBoard = boardRepository.findById(request.getBoardNo()).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
+        Board updatedBoard = findBoard.update(request); // JPA 변경감지로 update메서드만 호출하면 알아서 UPDATE 쿼리 날라감
+
+        return BoardDetailResponse.builder()
+                .boardNo(updatedBoard.getBoardNo())
+                .writer(updatedBoard.getWriter())
+                .title(updatedBoard.getTitle())
+                .contactLink(updatedBoard.getContactLink())
+                .studySubject(updatedBoard.getStudySubject())
+                .studyType(updatedBoard.getStudyType().getDescription())
+                .totalPeople(updatedBoard.getTotalPeople())
+                .content(updatedBoard.getContent())
+                .dueDate(updatedBoard.getDueDate())
+                .viewCount(updatedBoard.getViewCount())
+                .build();
+    }
+
+    public void deleteBoard(Long boardNo) {
+        boardRepository.deleteById(boardNo);
+    }
 }
