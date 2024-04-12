@@ -46,7 +46,7 @@ public class BoardService {
         boardRepository.save(request.toEntity());
     }
 
-    public BoardDetailResponse boardDetail(Long boardNo) {
+    public BoardDetailResponse detailBoard(Long boardNo) {
         Board board = boardRepository.findById(boardNo).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
 
         board.incrementViewCount(); // 조회수 1 증가
@@ -65,33 +65,26 @@ public class BoardService {
                 .viewCount(board.getViewCount())
                 .build();
     }
-    public BoardDetailResponse boardModify(Long id) {
-        Board board = boardRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
+
+    public BoardDetailResponse updateBoard(BoardUpdateRequest request) {
+        Board findBoard = boardRepository.findById(request.getBoardNo()).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
+        Board updatedBoard = findBoard.update(request); // JPA 변경감지로 update메서드만 호출하면 알아서 UPDATE 쿼리 날라감
 
         return BoardDetailResponse.builder()
-                .boardNo(board.getBoardNo())
-                .title(board.getTitle())
-                .contactLink(board.getContactLink())
-                .studySubject(board.getStudySubject())
-                .studyType(board.getStudyType().getDescription())
-                .totalPeople(board.getTotalPeople())
-                .content(board.getContent())
-                .dueDate(board.getDueDate())
-                .viewCount(board.getViewCount())
+                .boardNo(updatedBoard.getBoardNo())
+                .writer(updatedBoard.getWriter())
+                .title(updatedBoard.getTitle())
+                .contactLink(updatedBoard.getContactLink())
+                .studySubject(updatedBoard.getStudySubject())
+                .studyType(updatedBoard.getStudyType().getDescription())
+                .totalPeople(updatedBoard.getTotalPeople())
+                .content(updatedBoard.getContent())
+                .dueDate(updatedBoard.getDueDate())
+                .viewCount(updatedBoard.getViewCount())
                 .build();
     }
-    public void boardDelete(Long boardNo) {
-        Board board = boardRepository.findById(boardNo)
-                .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
 
-        boardRepository.delete(board);
-    }
-
-
-    public void boardUpdate(BoardUpdateRequest updateRequest) {
-        Board board = boardRepository.findById(updateRequest.getBoardNo())
-                .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
-
-        board.update(updateRequest);
+    public void deleteBoard(Long boardNo) {
+        boardRepository.deleteById(boardNo);
     }
 }

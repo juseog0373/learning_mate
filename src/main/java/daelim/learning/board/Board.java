@@ -1,6 +1,7 @@
 package daelim.learning.board;
 
 import daelim.learning.board.dto.BoardUpdateRequest;
+import daelim.learning.reply.Reply;
 import daelim.learning.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,6 +37,8 @@ public class Board {
     private User writer; // 작성자
     @CreationTimestamp
     private Date createdAt; //작성일
+    @OneToMany(mappedBy = "boardNo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reply> replies;
 
     public void incrementViewCount() {
         this.viewCount += 1;

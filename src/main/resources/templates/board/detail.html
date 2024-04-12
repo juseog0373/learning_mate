@@ -3,19 +3,20 @@
 <div th:replace="layout/head :: head"></div>
 <body>
 <div th:replace="layout/nav :: nav"></div>
+<script>
+    function deleteBoard(boardNo) {
+        if(confirm('삭제하시겠습니까?')) {
+            location.href='/board/delete/'+boardNo;
+        }
+    }
+</script>
 <div class="container mt-5">
     <h1 class="detail-header" th:text="${boardList.title}">Study Title</h1><br>
     <div class="text-end mb-3" th:if="${boardList.writer != null and session.userNo == boardList.writer.userNo}" style="padding: 0;">
-        <form th:action="@{/board/modify/{boardNo}(boardNo=${boardList.boardNo})}" method="get" style="display: inline;">
-            <button type="submit" class="btn btn-outline-dark" style="margin-right: 10px; border-radius: 30px">
-                수정
-            </button>
-        </form>
-        <form th:action="@{/board/delete/{boardNo}(boardNo=${boardList.boardNo})}" method="post" style="display: inline;">
-            <button type="submit" class="btn btn-outline-dark" onclick="return confirm('정말로 삭제하시겠습니까?');"
-                    style="border-radius: 30px" name="id" th:value="${boardList.boardNo}">
-                삭제
-            </button>
+        <a th:href="@{/board/update/{boardNo}(boardNo=${boardList.boardNo})}" class="btn btn-outline-dark" style="margin-right: 10px; border-radius: 30px">수정</a>
+        <button type="button" class="btn btn-outline-dark" th:onclick="deleteBoard([[${boardList.boardNo}]])" style="border-radius: 30px" name="id">
+            삭제
+        </button>
         </form>
     </div>
 

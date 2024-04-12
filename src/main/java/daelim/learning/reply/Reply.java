@@ -5,6 +5,8 @@ import daelim.learning.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDate;
@@ -30,6 +32,7 @@ public class Reply {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "board_no")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Board boardNo;
 
     @Lob
