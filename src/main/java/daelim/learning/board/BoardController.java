@@ -1,6 +1,7 @@
 package daelim.learning.board;
 
 import daelim.learning.board.dto.BoardRequest;
+import daelim.learning.board.dto.BoardUpdateRequest;
 import daelim.learning.reply.ReplyService;
 import daelim.learning.reply.dto.ReplyRequest;
 import jakarta.servlet.http.HttpSession;
@@ -47,5 +48,26 @@ public class BoardController {
         model.addAttribute("replyList", replyService.findAll(boardNo));
         
         return "board/detail";
+    }
+    @PostMapping("/board/delete/{id}")
+    public String delete(@PathVariable(name="id") Long id, Model model) {
+        model.addAttribute("list", boardService.boardDelete(id));
+        return "redirect:/";
+    }
+
+    @GetMapping("/board/modify/{id}")
+    public String modify(@PathVariable(name="id") Long id, Model model) {
+        model.addAttribute("update", boardService.boardModify(id));
+
+        return "board/modify";
+    }
+
+    @PostMapping("/board/update")
+    public String update(@ModelAttribute("update") BoardUpdateRequest updateRequest) {
+        updateRequest.setBoardNo(updateRequest.getBoardNo());
+
+        boardService.boardUpdate(updateRequest);
+        Long updatedBoardNo = updateRequest.getBoardNo();
+        return "redirect:/board/detail/" + updatedBoardNo;
     }
 }

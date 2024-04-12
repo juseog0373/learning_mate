@@ -1,5 +1,6 @@
 package daelim.learning.board;
 
+import daelim.learning.board.dto.BoardUpdateRequest;
 import daelim.learning.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,5 +38,17 @@ public class Board {
 
     public void incrementViewCount() {
         this.viewCount += 1;
+    }
+
+    public Board update(BoardUpdateRequest updateRequest){
+        this.boardNo = updateRequest.getBoardNo();
+        this.title = updateRequest.getTitle();
+        this.content = updateRequest.getContent();
+        this.studySubject = updateRequest.getStudySubject();
+        this.studyType = updateRequest.getStudyType();
+        this.dueDate = updateRequest.getDueDate();
+        this.totalPeople = updateRequest.getTotalPeople();
+
+        return this;
     }
 }

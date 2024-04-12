@@ -1,8 +1,6 @@
 package daelim.learning.board;
 
-import daelim.learning.board.dto.BoardDetailResponse;
-import daelim.learning.board.dto.BoardRequest;
-import daelim.learning.board.dto.BoardListResponse;
+import daelim.learning.board.dto.*;
 import daelim.learning.user.User;
 import daelim.learning.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -64,5 +62,35 @@ public class BoardService {
                 .viewCount(board.getViewCount())
                 .build();
     }
+    public BoardDetailResponse boardModify(Long id) {
+        Board board = boardRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
 
+        return BoardDetailResponse.builder()
+                .boardNo(board.getBoardNo())
+                .title(board.getTitle())
+                .contactLink(board.getContactLink())
+                .studySubject(board.getStudySubject())
+                .studyType(board.getStudyType().getDescription())
+                .totalPeople(board.getTotalPeople())
+                .content(board.getContent())
+                .dueDate(board.getDueDate())
+                .viewCount(board.getViewCount())
+                .build();
+    }
+    public BoardDeleteRequest boardDelete(Long id){
+        Board board = boardRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
+
+        boardRepository.deleteById(id);
+
+        return BoardDeleteRequest.builder()
+                .boardNo(board.getBoardNo())
+                .build();
+    }
+
+    public void boardUpdate(BoardUpdateRequest updateRequest) {
+        Board board = boardRepository.findById(updateRequest.getBoardNo())
+                .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
+
+        board.update(updateRequest);
+    }
 }
