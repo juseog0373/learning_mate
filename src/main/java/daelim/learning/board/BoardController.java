@@ -49,15 +49,15 @@ public class BoardController {
         
         return "board/detail";
     }
-    @PostMapping("/board/delete/{id}")
-    public String delete(@PathVariable(name="id") Long id, Model model) {
-        model.addAttribute("list", boardService.boardDelete(id));
+    @PostMapping("/delete/{boardNo}")
+    public String deleteBoard(@PathVariable(name = "boardNo") Long boardNo) {
+        boardService.boardDelete(boardNo);
         return "redirect:/";
     }
 
-    @GetMapping("/board/modify/{id}")
-    public String modify(@PathVariable(name="id") Long id, Model model) {
-        model.addAttribute("update", boardService.boardModify(id));
+    @GetMapping("/board/modify/{boardNo}")
+    public String modify(@PathVariable(name="boardNo") Long boardNo, Model model) {
+        model.addAttribute("update", boardService.boardModify(boardNo));
 
         return "board/modify";
     }

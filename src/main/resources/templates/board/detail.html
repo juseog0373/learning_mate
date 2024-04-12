@@ -5,21 +5,16 @@
 <div th:replace="layout/nav :: nav"></div>
 <div class="container mt-5">
     <h1 class="detail-header" th:text="${boardList.title}">Study Title</h1><br>
-    <div class="text-end mb-3" th:if="${boardList.writer != null and session.userNo == boardList.writer.userNo}">
-        <!-- 삭제 버튼 -->
-        <button th:href="@{/board/delete/{id}(id=${boardList.boardNo})}" type="submit" class="btn btn-outline-dark"
-                onclick="event.preventDefault(); document.getElementById('delete-form').submit();">
-            삭제
-        </button>
-        <!-- 삭제를 위한 숨겨진 폼 -->
-        <form id="delete-form" th:action="@{/board/delete/{id}(id=${boardList.boardNo})}" method="post" style="display: none;">
-            <input type="hidden" name="id" th:value="${boardList.boardNo}">
-        </form>
-
-        <!-- 수정 버튼 -->
-        <form th:action="@{/board/modify/{id}(id=${boardList.boardNo})}" method="get">
-            <button type="submit" class="btn btn-outline-dark">
+    <div class="text-end mb-3" th:if="${boardList.writer != null and session.userNo == boardList.writer.userNo}" style="padding: 0;">
+        <form th:action="@{/board/modify/{boardNo}(boardNo=${boardList.boardNo})}" method="get" style="display: inline;">
+            <button type="submit" class="btn btn-outline-dark" style="margin-right: 10px; border-radius: 30px">
                 수정
+            </button>
+        </form>
+        <form th:action="@{/board/delete/{boardNo}(boardNo=${boardList.boardNo})}" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-outline-dark" onclick="return confirm('정말로 삭제하시겠습니까?');"
+                    style="border-radius: 30px" name="id" th:value="${boardList.boardNo}">
+                삭제
             </button>
         </form>
     </div>

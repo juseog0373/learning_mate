@@ -48,6 +48,7 @@ public class Board {
         this.studyType = updateRequest.getStudyType();
         this.dueDate = updateRequest.getDueDate();
         this.totalPeople = updateRequest.getTotalPeople();
+        this.contactLink = updateRequest.getContactLink();
 
         return this;
     }

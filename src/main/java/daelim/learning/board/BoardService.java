@@ -1,6 +1,8 @@
 package daelim.learning.board;
 
 import daelim.learning.board.dto.*;
+import daelim.learning.reply.Reply;
+import daelim.learning.reply.ReplyRepository;
 import daelim.learning.user.User;
 import daelim.learning.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +23,7 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
+    private final ReplyRepository replyRepository;
 
     public List<BoardListResponse> findTopBoard() {
         return boardRepository.findAllByOrderByViewCountDesc().stream()
@@ -77,15 +80,13 @@ public class BoardService {
                 .viewCount(board.getViewCount())
                 .build();
     }
-    public BoardDeleteRequest boardDelete(Long id){
-        Board board = boardRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
+    public void boardDelete(Long boardNo) {
+        Board board = boardRepository.findById(boardNo)
+                .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
 
-        boardRepository.deleteById(id);
-
-        return BoardDeleteRequest.builder()
-                .boardNo(board.getBoardNo())
-                .build();
+        boardRepository.delete(board);
     }
+
 
     public void boardUpdate(BoardUpdateRequest updateRequest) {
         Board board = boardRepository.findById(updateRequest.getBoardNo())
