@@ -1,6 +1,8 @@
 package daelim.learning.board;
 
+import daelim.learning.board.dto.BoardDetailResponse;
 import daelim.learning.board.dto.BoardRequest;
+import daelim.learning.board.dto.BoardUpdateRequest;
 import daelim.learning.reply.ReplyService;
 import daelim.learning.reply.dto.ReplyRequest;
 import jakarta.servlet.http.HttpSession;
@@ -28,24 +30,44 @@ public class BoardController {
     }
 
     @GetMapping("/board/write")
-    public String write(Model model, BoardRequest boardRequest) {
+    public String writeForm(Model model, BoardRequest boardRequest) {
         model.addAttribute("boardRequest", boardRequest);
         return "board/write";
     }
 
     @PostMapping("/board/write")
-    public String writePro(@ModelAttribute("request") BoardRequest request, HttpSession session){
+    public String write(@ModelAttribute("request") BoardRequest request, HttpSession session){
         boardService.write(request, session);
 
         return "redirect:/";
     }
 
     @GetMapping("/board/detail/{boardNo}")
-    public String detail(Model model, @PathVariable(name="boardNo") Long boardNo, ReplyRequest replyRequest) {
-        model.addAttribute("boardList", boardService.boardDetail(boardNo));
+    public String detailForm(Model model, @PathVariable(name="boardNo") Long boardNo, ReplyRequest replyRequest) {
+        model.addAttribute("boardList", boardService.detailBoard(boardNo));
         model.addAttribute("replyRequest", replyRequest);
         model.addAttribute("replyList", replyService.findAll(boardNo));
         
         return "board/detail";
+    }
+
+    @GetMapping("/board/update/{boardNo}")
+    public String updateForm(@PathVariable(name="boardNo") Long boardNo, Model model) {
+        model.addAttribute("update", boardService.detailBoard(boardNo));
+
+        return "/board/update";
+    }
+
+    @PostMapping("/board/update/{boardNo}")
+    public String update(@PathVariable(name="boardNo") Long boardNo, @ModelAttribute("update") BoardUpdateRequest request) {
+        request.setBoardNo(boardNo);
+        boardService.updateBoard(request);
+        return "redirect:/board/detail/" + boardNo;
+    }
+
+    @GetMapping("/board/delete/{boardNo}")
+    public String delete(@PathVariable(name = "boardNo") Long boardNo) {
+        boardService.deleteBoard(boardNo);
+        return "redirect:/";
     }
 }
