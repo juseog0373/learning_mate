@@ -57,4 +57,58 @@
             document.getElementById("commentForm").submit();
         }
     </script>
+
+    <script>
+        // 특정 글자 수마다 줄바꿈 추가 함수
+        function addLineBreaks(selector, maxChars) {
+            const element = document.querySelector(selector);
+            if (element) {
+                let text = element.innerText;
+                let newText = '';
+                for (let i = 0; i < text.length; i += maxChars) {
+                    newText += text.substring(i, i + maxChars) + '\n';
+                }
+                element.innerText = newText;
+            }
+        }
+
+        // 페이지 로드 시 실행
+        document.addEventListener('DOMContentLoaded', function() {
+            addLineBreaks('#contentBox', 149); // 10글자 마다 줄바꿈 추가
+        });
+    </script>
+
+    <script>
+        function validateForm() {
+            // 입력 필드와 관련된 메시지를 객체로 정의
+            const fields = [
+                { id: 'postTitle1', message: '제목을 입력하세요.' },
+                { id: 'studySubject', message: '스터디 과목을 입력하세요.' },
+                { id: 'totalPeople', message: '모집 인원을 입력하세요.' },
+                { id: 'studyType', message: '진행 방식을 선택하세요.' },
+                { id: 'dueDate', message: '모집 마감일을 입력하세요.' },
+                { id: 'contactLink', message: '오픈채팅 링크를 입력하세요.' },
+                { id: 'postContent', message: '스터디에 대해 소개해주세요.' }
+            ];
+
+            // 각 필드를 순회하며 입력값 검사
+            for (let field of fields) {
+                const inputElement = document.getElementById(field.id);
+                if (!inputElement.value.trim()) { // 값이 비어 있거나 공백만 있는 경우
+                    alert(field.message); // 경고창 표시
+                    inputElement.focus(); // 해당 필드에 포커스
+                    return false; // 폼 제출 중지
+                }
+            }
+            // 모집 인원이 1명 이상인지 검사
+            const totalPeopleElement = document.getElementById('totalPeople');
+            if (parseInt(totalPeopleElement.value, 10) < 1) {
+                alert('모집 인원은 1명 이상이어야 합니다.');
+                totalPeopleElement.focus();
+                return false;
+            }
+
+            return true; // 모든 검사를 통과했으므로 폼 제출 계속
+        }
+    </script>
 </head>

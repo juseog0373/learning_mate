@@ -46,15 +46,14 @@
         <!-- 댓글 섹션 시작 -->
         <div class="comments-section">
             <h3 style="text-align: left; font-weight: bold;">댓글</h3>
-            <hr>
-
             <!-- 댓글 입력 -->
             <form id="commentForm" th:action="@{/board/detail/reply/{boardNo}(boardNo = ${boardList.boardNo})}" th:object="${replyRequest}" th:method="post">
                 <div class="mb-3">
+                    <div style="font-size: 3rem; margin-left: 0px;">🙋🏻</div>
                     <textarea class="form-control" id="commentText" th:field="*{comment}" rows="3" placeholder="여기에 작성해주세요 ..."></textarea>
                 </div>
                 <div class="text-end">
-                    <button type="button" class="btn btn-outline-dark" onclick="isSessionExistFormAction(submitCommentForm)">등록</button>
+                    <button type="button" class="btn btn-outline-dark"  style="margin-right: 30px; border-radius: 30px" onclick="isSessionExistFormAction(submitCommentForm)">댓글 등록</button>
                 </div><br><br>
             </form>
 
@@ -62,13 +61,14 @@
             <div class="submitted-comments mt-4">
                 <div th:each="reply : ${replyList}">
                     <div class="comment">
-                        <p class="comment-author" th:text="${reply.writer}">작성자 이름</p>
-                        <p class="comment-content" th:text="${reply.comment}">댓글 내용</p>
-                        <div class="text-end" th:if="${session.userName}">
-                            <button type="submit" class="btn btn-outline-dark">삭제</button>
+                        <p th:text="'🙋🏻 '+${reply.writer}" class="comment-author" style="font-weight: bold; font-size:22px;">작성자</p>
+                        <div class="comment-content-container">
+                            <div th:text="${reply.comment}" style="flex-grow: 1;">댓글 내용</div>
+                            <div class="text-end" th:if="${session.userName}">
+                                <button type="submit" class="btn btn-outline-dark" style="margin-right: 20px; border-radius: 30px;">삭제</button>
+                            </div>
                         </div>
-                        <br><br>
-                        <hr>
+                        <hr><br>
                     </div>
                 </div>
             </div>
@@ -76,26 +76,7 @@
     </div>
 </div><br><br><br><br>
 <footer class="py-5 bg-dark">
-    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Learning_Mate 2024</p></div>
+    <div class="container" style="margin-bottom: 0;"><p class="m-0 text-center text-white">Copyright &copy; Learning_Mate 2024</p></div>
 </footer>
-<script>
-    // 특정 글자 수마다 줄바꿈 추가 함수
-    function addLineBreaks(selector, maxChars) {
-        const element = document.querySelector(selector);
-        if (element) {
-            let text = element.innerText;
-            let newText = '';
-            for (let i = 0; i < text.length; i += maxChars) {
-                newText += text.substring(i, i + maxChars) + '\n';
-            }
-            element.innerText = newText;
-        }
-    }
-
-    // 페이지 로드 시 실행
-    document.addEventListener('DOMContentLoaded', function() {
-        addLineBreaks('#contentBox', 149); // 10글자 마다 줄바꿈 추가
-    });
-</script>
 </body>
 </html>
