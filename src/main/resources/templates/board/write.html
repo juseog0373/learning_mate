@@ -37,7 +37,7 @@
         <div class="form-row">
             <div class="mb-3">
                 <label for="dueDate" class="form-label">모집 마감일</label>
-                <input type="date" class="form-control" id="dueDate" th:field="*{dueDate}">
+                <input type="date" class="form-control" id="dueDate" th:field="*{dueDate}" th:min="${T(java.time.LocalDate).now().toString()}">
             </div>
 
             <div class="mb-3">
@@ -51,7 +51,7 @@
             <textarea class="form-control" id="postContent" rows="6" placeholder="Enter your content" th:field="*{content}"></textarea>
         </div>
         <div class="text-end">
-            <button type="submit" class="btn btn-outline-dark">작성</button>
+            <button type="submit" class="btn btn-outline-dark" onclick="return validateForm()">작성</button>
         </div><br><br>
     </form>
 
