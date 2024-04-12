@@ -117,3 +117,16 @@ footer{
 .card {
     height: 100%; /* 카드 높이 고정 */
 }
+
+.comment-content-container {
+    display: flex; /* Flexbox 적용 */
+    justify-content: space-between; /* 내용과 버튼을 양 끝에 배치 */
+    align-items: center; /* 요소들을 세로 방향으로 중앙 정렬 */
+    width: 100%; /* 컨테이너의 너비를 부모 요소의 100%로 설정 */
+}
+
+.comment-content-container > .text-end {
+    flex-shrink: 0; /* 삭제 버튼 크기를 고정 */
+    margin-left: 20px; /* 내용과 버튼 사이의 간격 설정 */
+}
+
