@@ -51,12 +51,19 @@
     <div class="container px-4 px-lg-5 mt-5">
         <input type="hidden" id="loginStatus" th:value="${session.userName != null ? 'logged-in' : 'not-logged-in'}" />
         <h3 style="text-align: left; font-weight: bold">인기글🔥</h3><br>
+
         <!-- 상위 4개 인기글 표시 -->
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <div th:each="list : ${topBoard}" class="col mb-5">
                 <div class="card h-100" style="position: relative; border-radius: 20px">
-                    <div style="display: flex; align-items: center; margin-top: 15px; margin-right: 0px;">
-                        <div style="border-radius: 15px; padding: 3px 8px; border: 2px solid #b02a37; margin-left: 20px; color: #b02a37; font-size: 13px; font-weight: bold">
+                    <!-- 날짜 계산을 위한 준비 -->
+                    <div th:with="today=${T(java.time.LocalDate).now()},
+                          deadline=${T(java.time.LocalDate).parse(list.dueDate)},
+                          daysLeft=${T(java.time.temporal.ChronoUnit).DAYS.between(today, deadline)}"
+                         style="display: flex; align-items: center; margin-top: 15px; margin-right: 0px;">
+                        <!-- 마감일 카운트다운 표시 -->
+                        <div th:style="'border-radius: 15px; padding: 3px 8px; border: 2px solid ' + (${daysLeft} == 0 ? '#b02a37' : (${daysLeft} < 0 ? '#6c757d' : '#b02a37')) + '; margin-left: 20px; color: ' + (${daysLeft} == 0 ? '#b02a37' : (${daysLeft} < 0 ? '#6c757d' : '#b02a37')) + '; font-size: 13px; font-weight: bold'"
+                             th:text="'마감 ' + ${daysLeft} + '일전'">
                             마감 0일전
                         </div>
                         <div style="margin-left: auto;">
@@ -68,7 +75,9 @@
                     <a style="text-decoration: none;" th:href="@{/board/detail/{id}(id=${list.boardNo})}">
                         <div class="card-body p-4">
                             <div class="text-center">
+                                <!-- 마감일 표시 -->
                                 <div th:text="'마감일 | ' + ${list.dueDate}" style="text-align: left; white-space: pre-line; color:black; margin-bottom: 10px; font-size: 14px; color: dimgrey;">마감일</div>
+                                <!-- 게시글 제목 -->
                                 <h5 class="fw-bolder title-truncate" th:text="${list.title}" style="text-align: left; color:black; font-weight: bold; font-size: 23px">제목</h5>
                             </div>
                         </div><br><br>
@@ -87,7 +96,7 @@
             </div>
         </div>
 
-        <h3 style="text-align: left; font-weight: bold">전체 게시글</h3>
+            <h3 style="text-align: left; font-weight: bold">전체 게시글</h3>
         <div class="select-container" style="position: relative; display: inline-block;">
             <select class="form-control" id="studyType" name="studyType">
                 <option value="" disabled selected>진행 방식</option>
@@ -119,8 +128,8 @@
                 <div class="card h-100" style="position: relative; border-radius: 20px">
                     <div style="display: flex; align-items: center; margin-top: 15px; margin-right: 0px;">
                         <!-- 따끈따끈 최신글 -->
-                        <div th:if="${iterStat.count &lt;= 4}" style="border-radius: 15px; padding: 3px 8px; background-color: #fff3cd; border: 2px solid orange; margin-left: 10px; color: darkorange; font-size: 13px; font-weight: bold">
-                            따끈따끈 최신글
+                        <div th:if="${iterStat.count &lt;= 4}" style="border-radius: 15px; padding: 3px 8px; background-color: #fff3cd; margin-left: 10px; color: darkorange; font-size: 13px; font-weight: bold">
+                            🍞 따끈따끈 최신글
                         </div>
                         <!-- 인기글 -->
                         <div th:if="${list.viewCount &gt; 799}" style="margin-left: 10px; margin-right: 10px; border-radius: 15px; padding: 3px 8px; background-color: #b6effb; color: blue; font-size: 13px; font-weight: bold;">
