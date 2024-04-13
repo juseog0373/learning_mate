@@ -9,9 +9,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class BoardUpdateRequest {
-    private Long boardNo;
     private String title;
-    private String studySubject="0";
+    private String studySubject;
     private StudyType studyType;
     private String totalPeople;
     private String dueDate;
