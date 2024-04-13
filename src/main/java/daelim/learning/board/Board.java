@@ -44,8 +44,7 @@ public class Board {
         this.viewCount += 1;
     }
 
-    public Board update(BoardUpdateRequest updateRequest){
-        this.boardNo = updateRequest.getBoardNo();
+    public void update(BoardUpdateRequest updateRequest){
         this.title = updateRequest.getTitle();
         this.content = updateRequest.getContent();
         this.studySubject = updateRequest.getStudySubject();
@@ -53,7 +52,5 @@ public class Board {
         this.dueDate = updateRequest.getDueDate();
         this.totalPeople = updateRequest.getTotalPeople();
         this.contactLink = updateRequest.getContactLink();
-
-        return this;
     }
 }
