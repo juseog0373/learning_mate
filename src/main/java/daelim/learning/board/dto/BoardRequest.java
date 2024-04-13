@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardRequest {
-    private String totalPeople="0";
+    private String totalPeople;
     private StudyType studyType;
     private String studySubject;
     private String dueDate;

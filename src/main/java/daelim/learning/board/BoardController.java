@@ -60,8 +60,7 @@ public class BoardController {
 
     @PostMapping("/board/update/{boardNo}")
     public String update(@PathVariable(name="boardNo") Long boardNo, @ModelAttribute("update") BoardUpdateRequest request) {
-        request.setBoardNo(boardNo);
-        boardService.updateBoard(request);
+        boardService.updateBoard(boardNo, request);
         return "redirect:/board/detail/" + boardNo;
     }
 
