@@ -66,21 +66,21 @@ public class BoardService {
                 .build();
     }
 
-    public BoardDetailResponse updateBoard(BoardUpdateRequest request) {
-        Board findBoard = boardRepository.findById(request.getBoardNo()).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
-        Board updatedBoard = findBoard.update(request); // JPA 변경감지로 update메서드만 호출하면 알아서 UPDATE 쿼리 날라감
+    public BoardDetailResponse updateBoard(Long boardNo, BoardUpdateRequest request) {
+        Board board = boardRepository.findById(boardNo).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
+        board.update(request); // JPA 변경감지로 update 메서드만 호출하면 알아서 UPDATE 쿼리 날라감
 
         return BoardDetailResponse.builder()
-                .boardNo(updatedBoard.getBoardNo())
-                .writer(updatedBoard.getWriter())
-                .title(updatedBoard.getTitle())
-                .contactLink(updatedBoard.getContactLink())
-                .studySubject(updatedBoard.getStudySubject())
-                .studyType(updatedBoard.getStudyType().getDescription())
-                .totalPeople(updatedBoard.getTotalPeople())
-                .content(updatedBoard.getContent())
-                .dueDate(updatedBoard.getDueDate())
-                .viewCount(updatedBoard.getViewCount())
+                .boardNo(board.getBoardNo())
+                .writer(board.getWriter())
+                .title(board.getTitle())
+                .contactLink(board.getContactLink())
+                .studySubject(board.getStudySubject())
+                .studyType(board.getStudyType().getDescription())
+                .totalPeople(board.getTotalPeople())
+                .content(board.getContent())
+                .dueDate(board.getDueDate())
+                .viewCount(board.getViewCount())
                 .build();
     }
 
