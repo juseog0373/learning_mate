@@ -168,22 +168,5 @@
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Learning_Mate 2024</p></div>
 </footer>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // 모든 .title-truncate 요소를 선택
-        var titles = document.querySelectorAll('.title-truncate');
-
-        // 각 요소에 대해 실행
-        titles.forEach(function(title) {
-            var text = title.innerText;
-
-            // 텍스트가 22자를 초과하면, 22자에서 잘라내고 "..." 추가
-            if (text.length > 22) {
-                title.innerText = text.substring(0, 22) + '...';
-            }
-        });
-    });
-</script>
-
 </body>
 </html>
