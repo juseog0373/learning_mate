@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -36,6 +37,7 @@ public class Board {
     @JoinColumn(name = "user_no")
     private User writer; // 작성자
     @CreationTimestamp
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date createdAt; //작성일
     @OneToMany(mappedBy = "boardNo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reply> replies;

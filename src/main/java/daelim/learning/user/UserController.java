@@ -52,8 +52,9 @@ public class UserController {
     }
 
     @GetMapping("/detail/{userNo}")
-    public String detail(Model model, @PathVariable(name="userNo") Long id) {
-        model.addAttribute("list", userService.userDetail(id));
+    public String detail(Model model, @PathVariable(name="userNo") Long userNo) {
+        model.addAttribute("userList", userService.userDetail(userNo));
+        model.addAttribute("myBoardList", userService.myBoardList(userNo));
         return "user/detail";
     }
 }
