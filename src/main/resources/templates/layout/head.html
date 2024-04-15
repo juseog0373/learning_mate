@@ -57,26 +57,6 @@
     </script>
 
     <script>
-        // 특정 글자 수마다 줄바꿈 추가 함수
-        function addLineBreaks(selector, maxChars) {
-            const element = document.querySelector(selector);
-            if (element) {
-                let text = element.innerText;
-                let newText = '';
-                for (let i = 0; i < text.length; i += maxChars) {
-                    newText += text.substring(i, i + maxChars) + '\n';
-                }
-                element.innerText = newText;
-            }
-        }
-
-        // 페이지 로드 시 실행
-        document.addEventListener('DOMContentLoaded', function() {
-            addLineBreaks('#contentBox', 149); // 10글자 마다 줄바꿈 추가
-        });
-    </script>
-
-    <script>
         function validateForm() {
             // 입력 필드와 관련된 메시지를 객체로 정의
             const fields = [
@@ -108,5 +88,22 @@
 
             return true; // 모든 검사를 통과했으므로 폼 제출 계속
         }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 모든 .title-truncate 요소를 선택
+            var titles = document.querySelectorAll('.title-truncate');
+
+            // 각 요소에 대해 실행
+            titles.forEach(function(title) {
+                var text = title.innerText;
+
+                // 텍스트가 22자를 초과하면, 22자에서 잘라내고 "..." 추가
+                if (text.length > 22) {
+                    title.innerText = text.substring(0, 22) + '...';
+                }
+            });
+        });
     </script>
 </head>
