@@ -1,9 +1,9 @@
 package daelim.learning.user;
 
-import daelim.learning.board.Board;
-import daelim.learning.board.dto.BoardDetailResponse;
+import daelim.learning.board.BoardRepository;
 import daelim.learning.user.dto.JoinRequest;
 import daelim.learning.user.dto.LoginRequest;
+import daelim.learning.user.dto.MyBoardListResponse;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +22,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public String login(LoginRequest request, HttpSession session, BindingResult bindingResult) {
@@ -38,7 +39,6 @@ public class UserService {
             session.setAttribute("userNo", userNo); // 세션에 사용자 이름 저장
             return "redirect:/"; // 메인 페이지로 리다이렉션
         } else {
-            System.out.println("로그인 실패");
             // 로그인 실패
             bindingResult.reject("loginFail", "아이디 또는 비밀번호를 확인해주세요.");
             return "login"; // 로그인 페이지로 리턴
@@ -55,16 +55,19 @@ public class UserService {
             userRepository.save(request.toEntity());
             return "redirect:/user/login";
         }
+    }
 
+    public User userDetail(Long userNo) {
+        return userRepository.findById(userNo).orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다. userNo = " + userNo));
+    }
+
+    public List<MyBoardListResponse> myBoardList(Long userNo) {
+        List<MyBoardListResponse> myBoard = boardRepository.findByWriterUserNoOrderByCreatedAtDesc(userNo).stream().map(MyBoardListResponse::new).toList();
+        return myBoard;
     }
 
     public Boolean isUserIdDuplicate(String userId) {
         Optional<User> findUser = userRepository.findByUserId(userId);
         return findUser.isPresent(); // 사용자를 찾았다면 true (중복), 찾지 못했다면 false (중복 아님)
     }
-
-    public User userDetail(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다." + id));
-    }
-
 }
