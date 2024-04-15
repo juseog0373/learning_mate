@@ -14,25 +14,24 @@
                     <div class="card-body">
                         <h5 class="card-title">회원 정보</h5>
                         <!-- 이름, 이메일, 전화번호를 타임리프를 사용하여 동적으로 표시 -->
-                        <p class="card-text"><strong>이름:</strong> <span th:text="${list.userName}">사용자 이름</span></p>
-                        <p class="card-text"><strong>이메일:</strong> <span th:text="${list.userEmail}">user@example.com</span></p>
-                        <p class="card-text"><strong>전화번호:</strong> <span th:text="${list.userPhone}">000-0000-0000</span></p>
+                        <p class="card-text"><strong>이름:</strong> <span th:text="${userList.userName}">사용자 이름</span></p>
+                        <p class="card-text"><strong>이메일:</strong> <span th:text="${userList.userEmail}">user@example.com</span></p>
+                        <p class="card-text"><strong>전화번호:</strong> <span th:text="${userList.userPhone}">000-0000-0000</span></p>
                         <a href="#" class="btn btn-outline-dark">프로필 편집</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
-                <h2>작성 글</h2>
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                <h2>작성한 글</h2>
+                <div class="list-group" th:each="myBoardList : ${myBoardList}">
+                    <a href="#" th:href="@{/board/detail/{id}(id=${myBoardList.boardNo})}" class="list-group-item list-group-item-action" aria-current="true">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">그룹 이름</h5>
-                            <small>마감일: YYYY-MM-DD</small>
+                            <h5 class="mb-1"><span th:text="${myBoardList.title}">제목</span></h5>
+                            <small>마감일:<span th:text="${myBoardList.dueDate}">2024-04-15</span></small>
                         </div>
-                        <p class="mb-1">간단한 설명이나 주요 정보</p>
-                        <small>더 자세한 정보...</small>
-                        <a href="#" class="btn btn-outline-dark">수정</a><a href="#" class="btn btn-outline-dark">삭제</a>
+                        <small>작성일: <span th:text="${#dates.format(myBoardList.createdAt, 'yyyy-MM-dd HH:mm:ss')}">2024-04-15</span></small>
                     </a>
+                    <br>
                 </div><br><br>
                 <h2>찜 스터디</h2>
                 <div class="list-group">
@@ -43,7 +42,6 @@
                         </div>
                         <p class="mb-1">간단한 설명이나 주요 정보</p>
                         <small>더 자세한 정보...</small>
-                        <a href="#" class="btn btn-outline-dark">삭제</a>
                     </a>
                 </div><br>
             </div>
