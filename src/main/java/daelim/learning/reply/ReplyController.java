@@ -12,6 +12,7 @@ import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,9 +39,10 @@ public class ReplyController {
     }
 
     // 삭제
-    @PostMapping("/board/detail/{boardNo}/reply/{replyId}/remove")
-    public String delete(@PathVariable(name="boardNo") Long boardNo, @PathVariable(name = "replyId") Long replyId) {
-        replyService.delete(replyId);
-        return "redirect:/board/detail/";
+    @GetMapping("/board/detail/{boardNo}/reply/remove/{replyNo}")
+    public String delete(@PathVariable(name="boardNo") Long boardNo, @PathVariable(name = "replyNo") Long replyNo, RedirectAttributes redirectAttributes) {
+        replyService.delete(replyNo);
+        redirectAttributes.addAttribute("boardNo", boardNo);
+        return "redirect:/board/detail/{boardNo}";
     }
 }
