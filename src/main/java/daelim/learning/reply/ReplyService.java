@@ -27,6 +27,7 @@ public class ReplyService {
                 reply -> ReplyListResponse.builder()
                         .comment(reply.getComment())
                         .user(reply.getUserNo())
+                        .replyNo(reply.getReplyNo())
                         .build()
         ).toList();
     }
