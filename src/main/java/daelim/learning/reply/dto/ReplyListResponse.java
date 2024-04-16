@@ -12,14 +12,13 @@ public class ReplyListResponse {
 
     private String comment;
     private String writer;
+    private Long replyNo;
+
 
     @Builder
-    public ReplyListResponse(String comment, User user) {
+    public ReplyListResponse(String comment, User user, Long replyNo) {
         this.comment = comment;
-        if (user != null) {
-            this.writer = user.getUserName();
-        } else {
-            throw new EntityNotFoundException("사용자가 없습니다.");
-        }
+        this.writer = user.getUserName();
+        this.replyNo = replyNo;
     }
 }
