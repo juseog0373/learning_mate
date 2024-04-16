@@ -10,13 +10,18 @@
             </ul>&nbsp;&nbsp;
             <div th:if="${session.userName}">
                 <a th:href="@{/user/detail/{userNo}(userNo=${session.userNo})}" class="btn btn-group-lg" th:text="${session.userName} + '님'"></a>
-                <a href="/user/logout" class="btn btn-outline-dark">logout</a>
+                <a href="/user/logout" class="btn btn-outline-dark">Logout</a>
             </div>
             <div th:unless="${session.userName}">
-                <form class="d-flex">
-                    <a href="/user/login" class="btn btn-outline-dark">Login</a>
-                </form>
+                <a href="/user/login" class="btn btn-outline-dark">Login</a>
             </div>
+            <!-- 토글 스위치 -->
+            <label class="switch" style="margin-left: 10px">
+                <input type="checkbox" id="darkModeToggle" onclick="toggleDarkMode()">
+                <span class="slider round"></span>
+                <span class="toggle-icon sun" id="sunIcon">&#9728;</span>  <!-- 해 아이콘 추가 -->
+                <span class="toggle-icon moon" id="moonIcon">&#9790;</span> <!-- 달 아이콘 추가 -->
+            </label>
         </div>
     </div>
 </nav>
