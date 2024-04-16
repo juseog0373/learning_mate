@@ -60,8 +60,8 @@
                         <p th:text="'🙋🏻 '+${reply.writer}" class="comment-author" style="font-weight: bold; font-size:22px;">작성자</p>
                         <div class="comment-content-container">
                             <div th:text="${reply.comment}" style="flex-grow: 1;">댓글 내용</div>
-                            <div class="text-end" th:if="${session.userName}">
-                                <button type="submit" class="btn btn-outline-dark" style="margin-right: 20px; border-radius: 30px;">삭제</button>
+                            <div class="text-end" th:if= "${session.userName != null and session.userName == reply.writer}">
+                                <a class="btn btn-outline-dark" th:href="@{/board/detail/{boardNo}/reply/remove/{replyNo}(boardNo = ${boardList.boardNo}, replyNo = ${reply.replyNo})}">삭제</a>
                             </div>
                         </div>
                         <hr><br>
