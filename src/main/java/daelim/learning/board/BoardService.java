@@ -6,6 +6,7 @@ import daelim.learning.reply.ReplyRepository;
 import daelim.learning.user.User;
 import daelim.learning.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,11 +47,13 @@ public class BoardService {
         boardRepository.save(request.toEntity());
     }
 
-    public BoardDetailResponse detailBoard(Long boardNo) {
+    public BoardDetailResponse detailBoard(Long boardNo, HttpServletRequest request) {
         Board board = boardRepository.findById(boardNo).orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
 
-        board.incrementViewCount(); // 조회수 1 증가
-        boardRepository.save(board); // 변경된 조회수 저장
+        if(!request.getRequestURI().contains("update")) {
+            board.incrementViewCount(); // 조회수 1 증가
+            boardRepository.save(board); // 변경된 조회수 저장
+        }
 
         return BoardDetailResponse.builder()
                 .boardNo(board.getBoardNo())
