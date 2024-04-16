@@ -5,11 +5,13 @@ import daelim.learning.board.dto.BoardRequest;
 import daelim.learning.board.dto.BoardUpdateRequest;
 import daelim.learning.reply.ReplyService;
 import daelim.learning.reply.dto.ReplyRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,25 +45,26 @@ public class BoardController {
     }
 
     @GetMapping("/board/detail/{boardNo}")
-    public String detailForm(Model model, @PathVariable(name="boardNo") Long boardNo, ReplyRequest replyRequest) {
-        model.addAttribute("boardList", boardService.detailBoard(boardNo));
+    public String detailForm(Model model, @PathVariable(name="boardNo") Long boardNo, ReplyRequest replyRequest, HttpServletRequest request) {
+        model.addAttribute("boardList", boardService.detailBoard(boardNo, request));
         model.addAttribute("replyRequest", replyRequest);
         model.addAttribute("replyList", replyService.findAll(boardNo));
-        
+
         return "board/detail";
     }
 
     @GetMapping("/board/update/{boardNo}")
-    public String updateForm(@PathVariable(name="boardNo") Long boardNo, Model model) {
-        model.addAttribute("update", boardService.detailBoard(boardNo));
+    public String updateForm(@PathVariable(name="boardNo") Long boardNo, Model model, HttpServletRequest request) {
+        model.addAttribute("update", boardService.detailBoard(boardNo, request));
 
         return "/board/update";
     }
 
     @PostMapping("/board/update/{boardNo}")
-    public String update(@PathVariable(name="boardNo") Long boardNo, @ModelAttribute("update") BoardUpdateRequest request) {
+    public String update(@PathVariable(name="boardNo") Long boardNo, @ModelAttribute("update") BoardUpdateRequest request, RedirectAttributes redirectAttributes) {
         boardService.updateBoard(boardNo, request);
-        return "redirect:/board/detail/" + boardNo;
+        redirectAttributes.addAttribute("boardNo", boardNo);
+        return "redirect:/board/detail/{boardNo}";
     }
 
     @GetMapping("/board/delete/{boardNo}")
