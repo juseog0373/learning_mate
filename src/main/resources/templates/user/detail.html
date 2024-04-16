@@ -13,11 +13,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">회원 정보</h5>
+                        <input type="hidden" id="loginStatus" th:value="${session.userName != null ? 'logged-in' : 'not-logged-in'}" />
                         <!-- 이름, 이메일, 전화번호를 타임리프를 사용하여 동적으로 표시 -->
                         <p class="card-text"><strong>이름:</strong> <span th:text="${userList.userName}">사용자 이름</span></p>
                         <p class="card-text"><strong>이메일:</strong> <span th:text="${userList.userEmail}">user@example.com</span></p>
                         <p class="card-text"><strong>전화번호:</strong> <span th:text="${userList.userPhone}">000-0000-0000</span></p>
-                        <a href="#" class="btn btn-outline-dark">프로필 편집</a>
+                        <a href="/user/edit" class="btn btn-outline-dark">프로필 편집</a>
                     </div>
                 </div>
             </div>

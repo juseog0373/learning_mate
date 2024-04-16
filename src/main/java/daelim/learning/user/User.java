@@ -1,5 +1,6 @@
 package daelim.learning.user;
 
+import daelim.learning.user.dto.UserUpdateRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,4 +22,9 @@ public class User {
     private String userName;
     private String userEmail;
     private String userPhone;
+    public void update(UserUpdateRequest updateRequest) {
+        this.userName = updateRequest.getUserName();
+        this.userEmail = updateRequest.getUserEmail();
+        this.userPhone = updateRequest.getUserPhone();
+    }
 }
