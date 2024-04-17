@@ -16,6 +16,7 @@ import static jakarta.persistence.FetchType.LAZY;
 
 @Table(name = "tb_reply")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Builder
