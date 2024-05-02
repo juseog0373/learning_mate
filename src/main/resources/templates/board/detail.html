@@ -68,12 +68,12 @@
 
                             <!-- 댓글 수정 -->
                             <div class="text-end" th:if= "${session.userName != null and session.userName == reply.writer}">
-                                <button class="btn btn-outline-dark" data-bs-toggle="collapse" th:data-bs-target="'#updateReplyForm' + ${reply.replyNo}" aria-expanded="false" aria-controls="updateReplyForm">수정</button>
+                                <button class="btn btn-outline-dark" data-bs-toggle="collapse" style="border-radius: 30px" th:data-bs-target="'#updateReplyForm' + ${reply.replyNo}" aria-expanded="false" aria-controls="updateReplyForm">수정</button>
                             </div>
 
                             <!-- 댓글 삭제 -->
                             <div class="text-end" th:if= "${session.userName != null and session.userName == reply.writer}">
-                                <a class="btn btn-outline-dark" th:href="@{/board/detail/{boardNo}/reply/remove/{replyNo}(boardNo = ${boardList.boardNo}, replyNo = ${reply.replyNo})}">삭제</a>
+                                <a class="btn btn-outline-dark" style="border-radius: 30px" th:href="@{/board/detail/{boardNo}/reply/remove/{replyNo}(boardNo = ${boardList.boardNo}, replyNo = ${reply.replyNo})}">삭제</a>
                             </div>
 
                         </div>

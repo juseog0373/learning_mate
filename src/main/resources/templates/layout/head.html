@@ -164,5 +164,68 @@
         // 페이지가 로드될 때 저장된 모드로 설정
         document.addEventListener('DOMContentLoaded', loadDarkMode);
     </script>
+    <script>
+        const images = [
+            '/bootstrap/image/index1.png',
+            '/bootstrap/image/index2.png',
+            '/bootstrap/image/index3.png',
+            '/bootstrap/image/index4.png',
+        ];
+        const imageLinks = {
+            '/bootstrap/image/index1.png': 'https://salty-cloak-a49.notion.site/Leaning_Mate-34032cf815ae4256a093c6021dd92b30?pvs=4',
+        };
+        let currentImage = 0;
+
+        function updateBackgroundImage() {
+            const header = document.querySelector('.custom-header');
+            const currentImagePath = images[currentImage];
+            header.style.backgroundImage = `url('${currentImagePath}')`;
+
+            // 이미지에 링크 설정
+            if (imageLinks[currentImagePath]) {
+                header.style.cursor = 'pointer';
+                header.onclick = function() {
+                    window.location.href = imageLinks[currentImagePath];
+                };
+            } else {
+                header.style.cursor = 'default';
+                header.onclick = null;
+            }
+
+            const navigation = document.querySelector('.navigation span');
+            if (navigation) {
+                navigation.textContent = `${currentImage + 1} | ${images.length}`;
+            }
+        }
+
+        function showNextImage(event) {
+            if (event) event.stopPropagation(); // 이벤트 전파 차단
+            currentImage = (currentImage + 1) % images.length;
+            updateBackgroundImage();
+        }
+
+        function showPrevImage(event) {
+            if (event) event.stopPropagation(); // 이벤트 전파 차단
+            currentImage = (currentImage - 1 + images.length) % images.length;
+            updateBackgroundImage();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateBackgroundImage();
+
+            const nextButton = document.querySelector('.next-button');
+            const prevButton = document.querySelector('.prev-button');
+
+            if (nextButton) {
+                nextButton.addEventListener('click', showNextImage);
+            }
+
+            if (prevButton) {
+                prevButton.addEventListener('click', showPrevImage);
+            }
+
+            setInterval(showNextImage, 4000); // 4초마다 자동으로 이미지 변경
+        });
+    </script>
 </head>
 
