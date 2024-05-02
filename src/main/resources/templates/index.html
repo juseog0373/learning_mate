@@ -2,20 +2,77 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:replace="layout/head :: head"></div>
 <link rel="stylesheet" th:href="@{/bootstrap/css/style.css}"/>
+<style>
+    .custom-header {
+        position: relative;
+        background-image: url('/bootstrap/image/index1.png');
+        min-height: 400px;
+        padding: 20px 40px;
+        border-radius: 30px;
+        margin-top: 40px; /* 원하는 상단 마진 값 */
+        margin-bottom: 0px; /* 원하는 하단 마진 값 */
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        max-width: 1300px;
+        background-size: cover;
+        background-position: center;
+        transition: background-image 0.5s ease-in-out; /* 부드러운 이미지 변경 효과 */
+    }
+
+    .navigation {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 20px;
+        padding: 5px;
+    }
+
+    /* 버튼 모양 수정 */
+    .prev-button, .next-button {
+        background-color: white; /* 버튼 배경색 */
+        border: none; /* 테두리 제거 */
+        border-radius: 50%; /* 둥근 모양 */
+        padding: 10px; /* 버튼 안의 공간 */
+        width: 40px; /* 버튼 너비 */
+        height: 40px; /* 버튼 높이 */
+        cursor: pointer; /* 마우스 커서 모양 */
+        display: flex; /* 가운데 정렬 */
+        align-items: center; /* 수직 정렬 */
+        justify-content: center; /* 수평 정렬 */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+        transition: transform 0.3s; /* 애니메이션 효과 */
+    }
+
+    .prev-button:hover, .next-button:hover {
+        background-color: lightgray; /* 호버 상태일 때 배경색 */
+        transform: scale(1.1); /* 호버 시 확대 효과 */
+    }
+
+    /* 숫자 표시 부분 수정 */
+    .navigation span {
+        font-weight: bold; /* 폰트 굵기 */
+        font-size: 14px; /* 폰트 크기 */
+        color: black; /* 폰트 색상 */
+        margin: 0 10px; /* 좌우 여백 */
+    }
+</style>
 <body>
 <div th:replace="layout/nav :: nav"></div>
 
-<header class="py-5">
-    <div class="container px-1 px-lg-5 my-5">
-        <div style="text-align: left; font-weight: bold; color:white">
-            <h1 class="display-4 fw-bolder">스터디를 찾는 가장 쉬운 방법!</h1><br>
-            <h3>러닝메이트와 함께 하세요!</h3><br>
-        </div>
+<div class="custom-header">
+    <div class="navigation">
+        <button class="prev-button">&lt;</button>
+        <span>1 | 4</span>
+        <button class="next-button">&gt;</button>
     </div>
-</header>
-
+</div>
 <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
+    <div class="container px-4 px-lg-5 mt-5" style="margin-top: 0px">
         <input type="hidden" id="loginStatus" th:value="${session.userName != null ? 'logged-in' : 'not-logged-in'}" />
         <h3 style="text-align: left; font-weight: bold">인기글🔥</h3><br>
         <!-- 상위 4개 인기글 표시 -->
@@ -56,7 +113,7 @@
                                 <!-- 마감일 표시 -->
                                 <div class="due-date" th:text="'마감일 | ' + ${list.dueDate}" style="text-align: left; white-space: pre-line; color:black; margin-bottom: 10px; font-size: 14px;">마감일</div>
                                 <!-- 게시글 제목 -->
-                                <h5 class="title" th:text="${list.title}" style="text-align: left; color:black; font-weight: bold; font-size: 23px">제목</h5>
+                                <h5 class="fw-bolder title-truncate title" th:text="${list.title}" style="text-align: left; color:black; font-weight: bold; font-size: 23px">제목</h5>
                             </div>
                         </div><br><br>
                         <div style="position: absolute; bottom: 0; left: 0; width: 100%;">
