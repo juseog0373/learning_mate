@@ -1,19 +1,19 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <h2><a href="/" style="font-weight: bold; text-decoration: none; color: black;">Learning Mate</a></h2>
+        <h1><a href="/" style="font-weight: bold; text-decoration: none; color: black;">Learning Mate</a></h1>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
             </ul>
             <ul class="navbar-nav">
-                <a class="nav-link" href="javascript:void(0)" onclick="isSessionExist('/board/write')">글 작성</a>
+                <a class="nav-link" href="javascript:void(0)" onclick="isSessionExist('/board/write')">팀원 모집하기</a>
             </ul>&nbsp;&nbsp;
             <div th:if="${session.userName}">
                 <a th:href="@{/user/detail/{userNo}(userNo=${session.userNo})}" class="btn btn-group-lg" th:text="${session.userName} + '님'"></a>
-                <a href="/user/logout" class="btn btn-outline-dark">Logout</a>
+                <a href="/user/logout" class="btn btn-outline-dark" style="border-radius: 30px">Logout</a>
             </div>
             <div th:unless="${session.userName}">
-                <a href="/user/login" class="btn btn-outline-dark">Login</a>
+                <a href="/user/login" class="btn btn-outline-dark" style="border-radius: 30px">Login</a>
             </div>
             <!-- 토글 스위치 -->
             <label class="switch" style="margin-left: 10px">
