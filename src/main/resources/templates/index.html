@@ -60,7 +60,40 @@
         color: black; /* 폰트 색상 */
         margin: 0 10px; /* 좌우 여백 */
     }
+    .like-button.liked::before {
+        content: "❤️";
+    }
+
+    .like-button:not(.liked)::before {
+        content: "🤝";
+    }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function like(boardNo) {
+        var loginStatus = document.getElementById('loginStatus').value;
+        var buttonId = 'likeButton' + boardNo;
+
+        if (loginStatus === 'not-logged-in') {
+            alert("로그인 이후 이용 가능합니다.");
+        } else {
+            $.ajax({
+                url: '/like/add/' + boardNo,
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+            }).done(function(result) {
+                if (result === "added") {
+                    alert("찜 성공.");
+                } else if (result === "removed") {
+                    alert("찜 해제.");
+                }
+            }).fail(function(error){
+                alert(JSON.stringify(error));
+            });
+        }
+    }
+
+</script>
 <body>
 <div th:replace="layout/nav :: nav"></div>
 
@@ -102,8 +135,8 @@
                         </div>
                         <!-- 기타 요소 -->
                         <div style="margin-left: auto;">
-                            <a th:onclick="|isSessionExist('@{/like/add/}'+${list.boardNo})|"
-                               style="text-decoration: none; color: inherit; margin-right: 10px; margin-top: 0px; font-size: 30px">
+                            <a th:id="'likeButton' + ${list.boardNo}" th:onclick="|like(${list.boardNo})|"
+                               style="text-decoration: none; color: inherit; margin-right: 10px; margin-top: 0px; font-size: 30px; cursor: pointer;">
                                 🤝
                             </a>
                         </div>
@@ -171,8 +204,8 @@
                             💙 인기
                         </div>
                         <div style="margin-left: auto;">
-                            <a th:onclick="|isSessionExist('@{/like/add/}'+${list.boardNo})|"
-                               style="text-decoration: none; color: inherit; margin-right: 10px; margin-top: 0px; font-size: 30px">
+                            <a th:onclick="|like(${list.boardNo})|"
+                               style="text-decoration: none; color: inherit; margin-right: 10px; margin-top: 0px; font-size: 30px; cursor: pointer;">
                                 🤝
                             </a>
                         </div>
