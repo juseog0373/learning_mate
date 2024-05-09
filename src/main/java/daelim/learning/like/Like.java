@@ -1,15 +1,12 @@
 package daelim.learning.like;
 
 import daelim.learning.board.Board;
-import daelim.learning.reply.Reply;
 import daelim.learning.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -37,4 +34,9 @@ public class Like {
             nullable = false
     )
     private Board board;
+
+    public Like(User user, Board board) {
+        this.user = user;
+        this.board = board;
+    }
 }
