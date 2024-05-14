@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,19 +24,24 @@ import java.util.stream.Collectors;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final BoardQueryRepository boardQueryRepository;
+
     private final UserRepository userRepository;
-    private final ReplyRepository replyRepository;
 
     public List<BoardListResponse> findTopBoard() {
         return boardRepository.findAllByOrderByViewCountDesc().stream()
                 .limit(4)
                 .map(BoardListResponse::new)
                 .collect(Collectors.toList());
-
     }
 
     public List<BoardListResponse> findAll() {
         List<BoardListResponse> boardList = boardRepository.findAllByOrderByCreatedAtDesc().stream().map(BoardListResponse::new).toList();
+        return boardList;
+    }
+
+    public List<BoardListResponse> findAll(BoardSearchCond boardSearchCond) {
+        List<BoardListResponse> boardList = boardQueryRepository.findAll(boardSearchCond).stream().map(BoardListResponse::new).toList();
         return boardList;
     }
 
