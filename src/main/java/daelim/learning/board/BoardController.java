@@ -2,6 +2,7 @@ package daelim.learning.board;
 
 import daelim.learning.board.dto.BoardDetailResponse;
 import daelim.learning.board.dto.BoardRequest;
+import daelim.learning.board.dto.BoardSearchCond;
 import daelim.learning.board.dto.BoardUpdateRequest;
 import daelim.learning.reply.ReplyService;
 import daelim.learning.reply.dto.ReplyRequest;
@@ -71,5 +72,16 @@ public class BoardController {
     public String delete(@PathVariable(name = "boardNo") Long boardNo) {
         boardService.deleteBoard(boardNo);
         return "redirect:/";
+    }
+
+    @GetMapping("/board/filter")
+    public String searchBoard(@RequestParam(name="studyType", required = false) StudyType studyType, @RequestParam(name="sortType", required = false) String sortType, Model model) {
+        BoardSearchCond boardSearchCond = new BoardSearchCond();
+        boardSearchCond.setStudyType(studyType);
+        boardSearchCond.setSortType(sortType);
+
+        model.addAttribute("allBoard", boardService.findAll(boardSearchCond));
+
+        return "index";
     }
 }
