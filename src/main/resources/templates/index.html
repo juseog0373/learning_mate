@@ -60,19 +60,14 @@
         color: black; /* 폰트 색상 */
         margin: 0 10px; /* 좌우 여백 */
     }
-    .like-button.liked::before {
-        content: "❤️";
-    }
 
-    .like-button:not(.liked)::before {
-        content: "🤝";
-    }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function like(boardNo) {
         var loginStatus = document.getElementById('loginStatus').value;
         var buttonId = 'likeButton' + boardNo;
+        var button = document.getElementById(buttonId);
 
         if (loginStatus === 'not-logged-in') {
             alert("로그인 이후 이용 가능합니다.");
@@ -83,16 +78,15 @@
                 contentType: 'application/json; charset=utf-8',
             }).done(function(result) {
                 if (result === "added") {
-                    alert("찜 성공.");
+                    button.innerHTML = '😍'; // 찜 추가 시 하트 이모지로 변경
                 } else if (result === "removed") {
-                    alert("찜 해제.");
+                    button.innerHTML = '😃'; // 찜 해제 시 악수 이모지로 변경
                 }
             }).fail(function(error){
                 alert(JSON.stringify(error));
             });
         }
     }
-
 </script>
 <body>
 <div th:replace="layout/nav :: nav"></div>
@@ -108,6 +102,7 @@
     <div class="container px-4 px-lg-5 mt-5" style="margin-top: 0px">
         <input type="hidden" id="loginStatus" th:value="${session.userName != null ? 'logged-in' : 'not-logged-in'}" />
         <h3 style="text-align: left; font-weight: bold">인기글🔥</h3><br>
+
         <!-- 상위 4개 인기글 표시 -->
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <div th:each="list : ${topBoard}" class="col mb-5">
@@ -136,8 +131,10 @@
                         <!-- 기타 요소 -->
                         <div style="margin-left: auto;">
                             <a th:id="'likeButton' + ${list.boardNo}" th:onclick="|like(${list.boardNo})|"
+                               th:class="${#lists.contains(likedBoards, list.boardNo) ? 'liked' : ''}"
                                style="text-decoration: none; color: inherit; margin-right: 10px; margin-top: 0px; font-size: 30px; cursor: pointer;">
-                                🤝
+                                <span th:if="${#lists.contains(likedBoards, list.boardNo)}">😍</span>
+                                <span th:unless="${#lists.contains(likedBoards, list.boardNo)}">😃</span>
                             </a>
                         </div>
                     </div>
@@ -204,9 +201,11 @@
                             💙 인기
                         </div>
                         <div style="margin-left: auto;">
-                            <a th:onclick="|like(${list.boardNo})|"
+                            <a th:id="'likeButton' + ${list.boardNo}" th:onclick="|like(${list.boardNo})|"
+                               th:class="${#lists.contains(likedBoards, list.boardNo) ? 'liked' : ''}"
                                style="text-decoration: none; color: inherit; margin-right: 10px; margin-top: 0px; font-size: 30px; cursor: pointer;">
-                                🤝
+                                <span th:if="${#lists.contains(likedBoards, list.boardNo)}">😍</span>
+                                <span th:unless="${#lists.contains(likedBoards, list.boardNo)}">😃</span>
                             </a>
                         </div>
                     </div>

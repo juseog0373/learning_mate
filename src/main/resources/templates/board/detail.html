@@ -17,7 +17,7 @@
     <h1 class="detail-header" th:text="${boardList.title}">Study Title</h1><br>
     <div class="text-end mb-3" th:if="${boardList.writer != null and session.userNo == boardList.writer.userNo}" style="padding: 0;">
         <a th:href="@{/board/update/{boardNo}(boardNo=${boardList.boardNo})}" class="btn btn-outline-dark" style="margin-right: 10px; border-radius: 30px">수정</a>
-        <button type="button" class="btn btn-outline-dark" th:onclick="deleteBoard([[${boardList.boardNo}]])" style="border-radius: 30px" name="id">
+        <button type="button" class="btn btn-outline-dark" th:onclick="deleteBoard(${boardList.boardNo})" style="border-radius: 30px" name="id">
             삭제
         </button>
         </form>
