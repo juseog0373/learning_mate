@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name="TB_LIKES")
 @Builder
-public class Like {
+public class Likes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long likeNo;
@@ -35,8 +35,5 @@ public class Like {
     )
     private Board board;
 
-    public Like(User user, Board board) {
-        this.user = user;
-        this.board = board;
-    }
+
 }

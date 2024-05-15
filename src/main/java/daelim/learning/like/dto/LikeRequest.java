@@ -1,7 +1,7 @@
 package daelim.learning.like.dto;
 
 import daelim.learning.board.Board;
-import daelim.learning.like.Like;
+import daelim.learning.like.Likes;
 import daelim.learning.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,8 +16,8 @@ public class LikeRequest {
     private Long userNo;
     private Long boardNo;
 
-    public Like toEntity(User user, Board board) {
-        return Like.builder()
+    public Likes toEntity(User user, Board board) {
+        return Likes.builder()
                 .board(board)
                 .user(user)
                 .build();

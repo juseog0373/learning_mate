@@ -26,7 +26,7 @@ public class LikeService {
         Board board = boardRepository.findById(request.getBoardNo())
                 .orElseThrow(() -> new NoSuchElementException("게시글을 찾을 수 없습니다."));
 
-        Like existingLike = likeRepository.findByUserAndBoard(user, board);
+        Likes existingLike = likeRepository.findByUserAndBoard(user, board);
 
         if (existingLike != null) {
             // 이미 찜한 상태이면 찜 해제
@@ -39,15 +39,9 @@ public class LikeService {
         }
     }
 
-    public List<Board> likeBoardlist(Long userNo) {
-        // 사용자가 찜한 게시글의 ID 목록을 가져옵니다.
-        List<Like> likedBoards = likeRepository.findByUser_UserNo(userNo);
-        // 게시글 ID 목록으로 해당하는 게시글들을 조회합니다.
-
-        List<Long> likedBoardIds = likedBoards.stream()
-                .map(like -> like.getBoard().getBoardNo())
-                .collect(Collectors.toList());
-        return boardRepository.findAllByBoardNoIn(likedBoardIds);
-
+    public List<Long> findLikedBoardList(Long userNo) {
+        // userNo를 기반으로 찜한 게시글의 ID 목록을 조회
+        List<Long> likedBoardList = likeRepository.findByUserNo(userNo);
+        return likedBoardList;
     }
 }
