@@ -2,15 +2,17 @@ package daelim.learning.like;
 
 import daelim.learning.board.Board;
 import daelim.learning.board.BoardRepository;
+import daelim.learning.board.dto.BoardListResponse;
 import daelim.learning.like.dto.LikeRequest;
+import daelim.learning.like.dto.LikedBoardResponse;
 import daelim.learning.user.User;
 import daelim.learning.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,5 +45,22 @@ public class LikeService {
         // userNo를 기반으로 찜한 게시글의 ID 목록을 조회
         List<Long> likedBoardList = likeRepository.findByUserNo(userNo);
         return likedBoardList;
+    }
+
+
+    public List<LikedBoardResponse> findLikedBoardInfo(Long userNo) {
+        //userNo로 user 정보 조회
+        User user = userRepository.findById(userNo)
+                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 유저 입니다."));
+
+        // userNo를 기반으로 찜한 게시글의 ID 목록을 조회
+        List<Likes> userLikes = likeRepository.findByUser(user);
+
+        List<LikedBoardResponse> likedBoards = new ArrayList<>();
+        for (Likes userLike : userLikes) {
+            Board board = userLike.getBoard();
+            likedBoards.add(LikedBoardResponse.from(board));
+        }
+        return likedBoards;
     }
 }

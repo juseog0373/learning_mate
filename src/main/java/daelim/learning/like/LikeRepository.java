@@ -16,4 +16,6 @@ public interface LikeRepository extends JpaRepository<Likes, Long> {
 
     @Query("SELECT l.board.boardNo FROM Likes l WHERE l.user.userNo = :userNo")
     List<Long> findByUserNo(@Param("userNo") Long userNo);
+
+    List<Likes> findByUser(User user);
 }

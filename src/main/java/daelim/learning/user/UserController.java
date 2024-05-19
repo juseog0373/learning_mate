@@ -1,17 +1,20 @@
 package daelim.learning.user;
 
+import daelim.learning.like.LikeService;
 import daelim.learning.user.dto.JoinRequest;
 import daelim.learning.user.dto.LoginRequest;
 import daelim.learning.user.dto.UserUpdateRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.mapping.Join;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -21,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
 
     private final UserService userService;
+    private final LikeService likeService;
 
     @GetMapping("/login")
     public String loginForm(Model model) {
@@ -53,11 +57,13 @@ public class UserController {
     }
 
     @GetMapping("/detail/{userNo}")
-    public String detail(Model model, @PathVariable(name="userNo") Long userNo) {
+    public String detail(Model model, @PathVariable(name = "userNo") Long userNo) {
         model.addAttribute("userList", userService.userDetail(userNo));
+        model.addAttribute("likedBoardList", likeService.findLikedBoardInfo(userNo));
         model.addAttribute("myBoardList", userService.myBoardList(userNo));
         return "user/detail";
     }
+
     @GetMapping("/edit")
     public String editForm(Model model, HttpSession session, UserUpdateRequest userUpdateRequest) {
         Long userNo = (Long) session.getAttribute("userNo");

@@ -35,15 +35,16 @@
                     <br>
                 </div><br><br>
                 <h2>찜 스터디</h2>
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                <div class="list-group" th:each="likedBoard : ${likedBoardList}">
+                    <a th:href="@{/board/detail/{id}(id=${likedBoard.boardNo})}" class="list-group-item list-group-item-action" aria-current="true">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">그룹 이름</h5>
-                            <small>마감일: YYYY-MM-DD</small>
+                            <h5 class="mb-1"><span th:text="${likedBoard.title}">그룹 이름</span></h5>
+                            <small>마감일:<span th:text="${likedBoard.dueDate}">2024-04-15</span></small>
                         </div>
-                        <p class="mb-1">간단한 설명이나 주요 정보</p>
-                        <small>더 자세한 정보...</small>
+                        <p th:text="${likedBoard.content}" class="mb-1">본문</p>
                     </a>
+                </div><br>
+                </div><br>
                 </div><br>
             </div>
         </div>
