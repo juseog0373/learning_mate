@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LikeController {
 
     private final LikeService likeService;
-    private final LikeRepository likeRepository;
-    private BoardRepository boardRepository; // BoardRepository 주입
 
     @PostMapping("/like/add/{boardNo}")
     @ResponseBody
