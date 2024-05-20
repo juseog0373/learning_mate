@@ -1,9 +1,12 @@
 package daelim.learning.like.dto;
 
 import daelim.learning.board.Board;
+import daelim.learning.like.Likes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 @Getter
 @NoArgsConstructor
@@ -12,14 +15,10 @@ public class LikedBoardResponse {
     private Long boardNo;
     private String title;
     private String dueDate;
-    private String content;
 
-    public static LikedBoardResponse from(final Board board) {
-        return new LikedBoardResponse(
-                board.getBoardNo(),
-                board.getTitle(),
-                board.getDueDate(),
-                board.getContent()
-        );
+    public LikedBoardResponse(Board board) {
+        this.boardNo = board.getBoardNo();
+        this.title = board.getTitle();
+        this.dueDate = board.getDueDate();
     }
 }

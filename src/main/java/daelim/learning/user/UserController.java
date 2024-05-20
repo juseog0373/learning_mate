@@ -59,7 +59,7 @@ public class UserController {
     @GetMapping("/detail/{userNo}")
     public String detail(Model model, @PathVariable(name = "userNo") Long userNo) {
         model.addAttribute("userList", userService.userDetail(userNo));
-        model.addAttribute("likedBoardList", likeService.findLikedBoardInfo(userNo));
+        model.addAttribute("likedBoardList", likeService.likedBoardList(userNo));
         model.addAttribute("myBoardList", userService.myBoardList(userNo));
         return "user/detail";
     }
