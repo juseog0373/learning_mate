@@ -2,15 +2,21 @@ package daelim.learning.like;
 
 import daelim.learning.board.Board;
 import daelim.learning.board.BoardRepository;
+import daelim.learning.board.dto.BoardListResponse;
 import daelim.learning.like.dto.LikeRequest;
+import daelim.learning.like.dto.LikedBoardResponse;
 import daelim.learning.user.User;
 import daelim.learning.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -21,10 +27,8 @@ public class LikeService {
     private final BoardRepository boardRepository;
 
     public String addLike(LikeRequest request) {
-        User user = userRepository.findById(request.getUserNo())
-                .orElseThrow(() -> new NoSuchElementException("사용자를 찾을 수 없습니다."));
-        Board board = boardRepository.findById(request.getBoardNo())
-                .orElseThrow(() -> new NoSuchElementException("게시글을 찾을 수 없습니다."));
+        User user = userRepository.findById(request.getUserNo()).orElseThrow(() -> new NoSuchElementException("사용자를 찾을 수 없습니다."));
+        Board board = boardRepository.findById(request.getBoardNo()).orElseThrow(() -> new NoSuchElementException("게시글을 찾을 수 없습니다."));
 
         Likes existingLike = likeRepository.findByUserAndBoard(user, board);
 
@@ -42,6 +46,22 @@ public class LikeService {
     public List<Long> findLikedBoardList(Long userNo) {
         // userNo를 기반으로 찜한 게시글의 ID 목록을 조회
         List<Long> likedBoardList = likeRepository.findByUserNo(userNo);
+        return likedBoardList;
+    }
+
+
+    public List<LikedBoardResponse> likedBoardList(Long userNo) {
+
+        List<Long> likedBoardNoList = findLikedBoardList(userNo);
+
+        List<Board> boardList = new ArrayList<>();
+        for (Long boardNo : likedBoardNoList) {
+            Board findBoard = boardRepository.findByBoardNo(boardNo);
+            boardList.add(findBoard);
+        }
+
+        List<LikedBoardResponse> likedBoardList = boardList.stream().map(LikedBoardResponse::new).toList();
+
         return likedBoardList;
     }
 }
