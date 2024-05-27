@@ -1,9 +1,8 @@
-package daelim.learning.reply;
+package daelim.learning.reply.controller;
 
-import daelim.learning.board.Board;
 import daelim.learning.board.BoardRepository;
+import daelim.learning.reply.service.ReplyService;
 import daelim.learning.reply.dto.ReplyRequest;
-import daelim.learning.user.User;
 import daelim.learning.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -42,9 +41,14 @@ public class ReplyController {
 
     // 삭제
     @GetMapping("/board/detail/{boardNo}/reply/remove/{replyNo}")
-    public String delete(@PathVariable(name="boardNo") Long boardNo, @PathVariable(name = "replyNo") Long replyNo, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable(name="boardNo") Long boardNo,
+                         @PathVariable(name = "replyNo") Long replyNo,
+                         RedirectAttributes redirectAttributes) {
+
         replyService.delete(replyNo);
         redirectAttributes.addAttribute("boardNo", boardNo);
+
         return "redirect:/board/detail/{boardNo}";
     }
+
 }

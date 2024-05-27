@@ -76,12 +76,48 @@
                                 <a class="btn btn-outline-dark" style="border-radius: 30px" th:href="@{/board/detail/{boardNo}/reply/remove/{replyNo}(boardNo = ${boardList.boardNo}, replyNo = ${reply.replyNo})}">삭제</a>
                             </div>
 
+                            <!-- 답글 달기 버튼 -->
+                            <div class="text-end" th:if= "${session.userName != null and session.userName == reply.writer}">
+                                <button class="btn btn-outline-dark" data-bs-toggle="collapse" style="border-radius: 30px" th:data-bs-target="'#wrtieChildReply' + ${reply.replyNo}" aria-expanded="false" aria-controls="wrtieChildReply">답글 달기</button>
+                            </div>
+
+                            <!-- 대댓글 보기 버튼 -->
+                            <div class="text-end">
+                                <button class="btn btn-outline-dark" data-bs-toggle="collapse" style="border-radius: 30px" th:data-bs-target="'#childReplies' + ${reply.replyNo}" aria-expanded="false" aria-controls="childReplies">대댓글 보기</button>
+                            </div>
+
                         </div>
 
+                        <!-- 부모 수정 토글 -->
                         <div class="collapse" th:id="'updateReplyForm' + ${reply.replyNo}">
                             <form th:action="@{/board/detail/{boardNo}/reply/update/{replyNo}(boardNo = ${boardList.boardNo}, replyNo = ${reply.replyNo})}" th:object="${replyRequest}" th:method="post">
                                 <div class="mb-3">
                                     <textarea class="form-control" id="updateText" th:field="*{comment}" th:text="${reply.comment}" rows="3"></textarea>
+                                </div>
+
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-outline-dark"  style="margin-right: 30px; border-radius: 30px">수정하기</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- 자식 댓글 조회 -->
+                        <div class="collapse" th:id="'childReplies' + ${reply.replyNo}">
+                            <div th:each="childReply : ${childReplies}">
+                                <div class="comment">
+                                    <p th:text="'🙋🏻 '+${childReply.writer}" class="comment-author" style="font-weight: bold; font-size:22px;">작성자</p>
+
+                                    <div class="comment-content-container">
+                                        <div th:text="${childReply.comment}" style="flex-grow: 1;">댓글 내용</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <!-- 답글 달기 토글 -->
+                        <div class="collapse" th:id="'wrtieChildReply' + ${reply.replyNo}">
+                            <form th:action="@{/board/detail/{boardNo}/reply/update/{replyNo}(boardNo = ${boardList.boardNo}, replyNo = ${reply.replyNo})}" th:object="${replyRequest}" th:method="post">
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="wrtieChildText" th:field="*{comment}" th:text="${reply.comment}" rows="3"></textarea>
                                 </div>
 
                                 <div class="text-end">

@@ -1,7 +1,9 @@
-package daelim.learning.reply;
+package daelim.learning.reply.service;
 
 import daelim.learning.board.Board;
 import daelim.learning.board.BoardRepository;
+import daelim.learning.reply.repository.ReplyRepository;
+import daelim.learning.reply.entity.Reply;
 import daelim.learning.reply.dto.ReplyListResponse;
 import daelim.learning.reply.dto.ReplyRequest;
 import daelim.learning.user.User;
@@ -35,7 +37,7 @@ public class ReplyService {
         replyRepository.save(reply);
     }
 
-    // 조회
+    // 부모 조회
     public List<ReplyListResponse> findAll(Long boardNo) {
         return replyRepository.findByBoardNoBoardNo(boardNo).stream().map(
                 reply -> ReplyListResponse.builder()

@@ -1,6 +1,6 @@
-package daelim.learning.reply;
+package daelim.learning.reply.repository;
 
-import daelim.learning.board.Board;
+import daelim.learning.reply.entity.Reply;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

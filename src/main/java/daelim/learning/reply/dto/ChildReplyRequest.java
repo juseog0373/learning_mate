@@ -1,6 +1,7 @@
 package daelim.learning.reply.dto;
 
 import daelim.learning.board.Board;
+import daelim.learning.reply.entity.ChildReply;
 import daelim.learning.reply.entity.Reply;
 import daelim.learning.user.User;
 import lombok.*;
@@ -9,15 +10,16 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReplyRequest {
+public class ChildReplyRequest {
 
     private String comment;
 
-    public Reply toEntity(Board board, User user) {
-        return Reply.builder()
-                .comment(comment)
-                .userNo(user)
+    public ChildReply toEntity(Board board, User user, Reply reply) {
+        return ChildReply.builder()
                 .boardNo(board)
+                .userNo(user)
+                .replyNo(reply)
+                .comment(comment)
                 .build();
     }
 }
