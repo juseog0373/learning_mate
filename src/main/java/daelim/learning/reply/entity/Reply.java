@@ -9,12 +9,13 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static jakarta.persistence.FetchType.LAZY;
 
 @Table(name = "tb_reply")
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Builder
@@ -31,7 +32,6 @@ public class Reply {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "board_no")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Board boardNo;
 
     @Lob
@@ -41,5 +41,9 @@ public class Reply {
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "childNo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChildReply> childReplies = new ArrayList<>();
+
 
 }

@@ -23,8 +23,8 @@ public class ChildReplyController {
                         @PathVariable(name = "replyNo") Long replyNo,
                         ChildReplyRequest request,
                         HttpSession session) throws NullPointerException {
-        childReplyService.save(request, replyNo, boardNo, session);
-        return "redirect:/board/detail/reply/" + boardNo;
+        childReplyService.save(request, replyNo, session);
+        return "redirect:/board/detail/" + boardNo;
     }
 
     // 대댓글 수정
@@ -37,7 +37,8 @@ public class ChildReplyController {
                          RedirectAttributes redirectAttributes) {
 
         childReplyService.update(request, childReplyNo);
-        return "redirect:/board/detail/reply/" + boardNo;
+
+        return "redirect:/board/detail/" + boardNo;
     }
 
     // 대댓글 삭제
@@ -49,20 +50,7 @@ public class ChildReplyController {
 
         childReplyService.delete(childReplyNo);
 
-        redirectAttributes.addAttribute("replyNo", replyNo);
-
         return "redirect:/board/detail/{boardNo}";
-    }
-
-    // 대댓글 조회
-    @GetMapping("/board/detail/{boardNo}/{replyNo}")
-    public String viewChildReplyList(Model model,
-                                     @PathVariable(name = "boardNo") Long boardNo,
-                                     @PathVariable(name = "replyNo") Long replyNo) {
-
-        model.addAttribute("childReplies", childReplyService.findAllChildReply(boardNo, replyNo));
-
-        return "redirect:/board/detail/" + boardNo + "/" + replyNo;
     }
 
 }

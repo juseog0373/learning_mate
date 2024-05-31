@@ -30,13 +30,7 @@ public class ChildReply {
     private User userNo; // 사용자
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "board_no")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Board boardNo; // 게시글
-
-    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "reply_no")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Reply replyNo; // 부모 댓글
 
     @Lob
@@ -47,7 +41,4 @@ public class ChildReply {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public void updateComment(String comment) {
-        this.comment = comment;
-    }
 }

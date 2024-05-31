@@ -29,8 +29,10 @@ public class ReplyController {
 
     // 수정
     @PostMapping("/board/detail/{boardNo}/reply/update/{replyNo}")
-    public String update(@PathVariable(name="boardNo") Long boardNo, @PathVariable(name = "replyNo") Long replyNo,
-                         ReplyRequest request, RedirectAttributes redirectAttributes) {
+    public String update(@PathVariable(name="boardNo") Long boardNo,
+                         @PathVariable(name = "replyNo") Long replyNo,
+                         ReplyRequest request,
+                         RedirectAttributes redirectAttributes) {
 
         replyService.update(request, replyNo);
 

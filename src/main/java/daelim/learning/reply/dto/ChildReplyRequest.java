@@ -14,9 +14,8 @@ public class ChildReplyRequest {
 
     private String comment;
 
-    public ChildReply toEntity(Board board, User user, Reply reply) {
+    public ChildReply toEntity(User user, Reply reply) {
         return ChildReply.builder()
-                .boardNo(board)
                 .userNo(user)
                 .replyNo(reply)
                 .comment(comment)

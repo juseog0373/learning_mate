@@ -1,11 +1,11 @@
 package daelim.learning.board;
 
-import daelim.learning.board.dto.BoardDetailResponse;
 import daelim.learning.board.dto.BoardRequest;
 import daelim.learning.board.dto.BoardSearchCond;
 import daelim.learning.board.dto.BoardUpdateRequest;
 import daelim.learning.like.LikeService;
-import daelim.learning.reply.ReplyService;
+import daelim.learning.reply.dto.ChildReplyRequest;
+import daelim.learning.reply.service.ReplyService;
 import daelim.learning.reply.dto.ReplyRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -58,9 +58,13 @@ public class BoardController {
     }
 
     @GetMapping("/board/detail/{boardNo}")
-    public String detailForm(Model model, @PathVariable(name="boardNo") Long boardNo, ReplyRequest replyRequest, HttpServletRequest request) {
+    public String detailForm(Model model, @PathVariable(name="boardNo") Long boardNo,
+                             ReplyRequest replyRequest,
+                             ChildReplyRequest childReplyRequest,
+                             HttpServletRequest request) {
         model.addAttribute("boardList", boardService.detailBoard(boardNo, request));
         model.addAttribute("replyRequest", replyRequest);
+        model.addAttribute("childRequest", childReplyRequest);
         model.addAttribute("replyList", replyService.findAll(boardNo));
 
         return "board/detail";
