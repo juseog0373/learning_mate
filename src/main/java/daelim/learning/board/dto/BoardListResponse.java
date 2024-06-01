@@ -4,8 +4,7 @@ import daelim.learning.board.Board;
 import daelim.learning.user.User;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class BoardListResponse {
     private Long boardNo;

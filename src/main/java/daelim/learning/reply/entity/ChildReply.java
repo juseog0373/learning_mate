@@ -1,4 +1,4 @@
-package daelim.learning.reply;
+package daelim.learning.reply.entity;
 
 import daelim.learning.board.Board;
 import daelim.learning.user.User;
@@ -7,34 +7,31 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.data.annotation.CreatedDate;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static jakarta.persistence.FetchType.LAZY;
 
-@Table(name = "tb_reply")
+@Table(name = "tb_child_reply")
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Builder
 @AllArgsConstructor
-public class Reply {
+public class ChildReply {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "reply_no")
-    private Long replyNo;
+    @Column(name = "child_no")
+    private Long childNo;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_no")
-    private User userNo;
+    private User userNo; // 사용자
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "board_no")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Board boardNo;
+    @JoinColumn(name = "reply_no")
+    private Reply replyNo; // 부모 댓글
 
     @Lob
     @Column(nullable = false, name = "comment")

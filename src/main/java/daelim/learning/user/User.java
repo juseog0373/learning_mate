@@ -22,6 +22,7 @@ public class User {
     private String userName;
     private String userEmail;
     private String userPhone;
+
     public void update(UserUpdateRequest updateRequest) {
         this.userName = updateRequest.getUserName();
         this.userEmail = updateRequest.getUserEmail();
