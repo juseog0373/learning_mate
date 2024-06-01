@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class BoardSearchCond {
     private StudyType studyType;
     private String sortType;
+    private String keyword;
 }
