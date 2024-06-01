@@ -27,10 +27,8 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
     private final ChildReplyRepository childReplyRepository;
-
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
-
 
     public void save(ReplyRequest replyRequest, Long boardNo, HttpSession session) {
 

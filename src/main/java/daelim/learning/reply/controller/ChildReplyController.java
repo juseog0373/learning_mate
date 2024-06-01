@@ -22,23 +22,25 @@ public class ChildReplyController {
     public String write(@PathVariable(name = "boardNo") Long boardNo,
                         @PathVariable(name = "replyNo") Long replyNo,
                         ChildReplyRequest request,
-                        HttpSession session) throws NullPointerException {
+                        HttpSession session,
+                        RedirectAttributes redirectAttributes) throws NullPointerException {
         childReplyService.save(request, replyNo, session);
-        return "redirect:/board/detail/" + boardNo;
+
+        redirectAttributes.addAttribute("boardNo", boardNo);
+        return "redirect:/board/detail/{boardNo}";
     }
 
     // 대댓글 수정
     @PostMapping("/board/detail/{boardNo}/reply/{replyNo}/{childReplyNo}/update")
     public String update(@PathVariable(name = "boardNo") Long boardNo,
-                         @PathVariable(name = "replyNo") Long replyNo,
                          @PathVariable(name = "childReplyNo") Long childReplyNo,
                          ChildReplyRequest request,
-                         HttpSession session,
                          RedirectAttributes redirectAttributes) {
 
         childReplyService.update(request, childReplyNo);
 
-        return "redirect:/board/detail/" + boardNo;
+        redirectAttributes.addAttribute("boardNo", boardNo);
+        return "redirect:/board/detail/{boardNo}";
     }
 
     // 대댓글 삭제
@@ -50,6 +52,7 @@ public class ChildReplyController {
 
         childReplyService.delete(childReplyNo);
 
+        redirectAttributes.addAttribute("boardNo", boardNo);
         return "redirect:/board/detail/{boardNo}";
     }
 
