@@ -76,17 +76,64 @@
                 url: '/like/add/' + boardNo,
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
-            }).done(function(result) {
+            }).done(function (result) {
                 if (result === "added") {
                     button.innerHTML = '😍'; // 찜 추가 시 하트 이모지로 변경
                 } else if (result === "removed") {
                     button.innerHTML = '😃'; // 찜 해제 시 악수 이모지로 변경
                 }
-            }).fail(function(error){
+            }).fail(function (error) {
                 alert(JSON.stringify(error));
             });
         }
     }
+    $(document).ready(function() {
+        // URL에서 파라미터 추출
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        var studyType = getUrlParameter('studyType');
+        var sortType = getUrlParameter('sortType');
+        var keyword = getUrlParameter('keyword');
+
+        // 셀렉트박스와 검색어 입력란 초기화
+        if (studyType) $('#studyType').val(studyType);
+        if (sortType) $('#sortType').val(sortType);
+        if (keyword) $('.search-input').val(keyword);
+
+        // 셀렉트박스 변경 이벤트 리스너
+        $('#studyType, #sortType').change(function() {
+            updateUrlAndFetchBoardList();
+        });
+
+        // 검색어 입력란 엔터 키 이벤트 리스너
+        $('.search-input').on('keypress', function(e) {
+            if (e.which === 13) { // 엔터 키가 눌렸을 때
+                updateUrlAndFetchBoardList();
+            }
+        });
+
+        // URL 갱신 및 게시판 목록 불러오기
+        function updateUrlAndFetchBoardList() {
+            var newStudyType = $('#studyType').val();
+            var newSortType = $('#sortType').val();
+            var newKeyword = $('.search-input').val();
+            var parameters = [];
+
+            // 조건에 따라 파라미터 배열에 추가
+            if (newStudyType) parameters.push('studyType=' + encodeURIComponent(newStudyType));
+            if (newSortType) parameters.push('sortType=' + encodeURIComponent(newSortType));
+            if (newKeyword) parameters.push('keyword=' + encodeURIComponent(newKeyword));
+
+            // URL 갱신
+            var newUrl = '/?' + parameters.join('&');
+            window.location.href = newUrl; // 페이지 리디렉션
+        }
+    });
 </script>
 <body>
 <div th:replace="layout/nav :: nav"></div>
@@ -100,7 +147,7 @@
 </div>
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5" style="margin-top: 0px">
-        <input type="hidden" id="loginStatus" th:value="${session.userName != null ? 'logged-in' : 'not-logged-in'}" />
+        <input type="hidden" id="loginStatus" th:value="${session.userName != null ? 'logged-in' : 'not-logged-in'}"/>
         <h3 style="text-align: left; font-weight: bold">인기글🔥</h3><br>
 
         <!-- 상위 4개 인기글 표시 -->
@@ -141,7 +188,7 @@
                     <a style="text-decoration: none;" th:href="@{/board/detail/{id}(id=${list.boardNo})}">
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <!-- 마감일 표시 -->
+                            <!-- 마감일 표시 -->
                                 <div class="due-date" th:text="'마감일 | ' + ${list.dueDate}" style="text-align: left; white-space: pre-line; color:black; margin-bottom: 10px; font-size: 14px;">마감일</div>
                                 <!-- 게시글 제목 -->
                                 <h5 class="fw-bolder title-truncate title" th:text="${list.title}" style="text-align: left; color:black; font-weight: bold; font-size: 23px">제목</h5>
@@ -162,24 +209,22 @@
         </div>
 
         <h3 style="text-align: left; font-weight: bold">전체 게시글</h3>
+
         <div class="select-container" style="position: relative; display: inline-block;">
             <select class="form-control" id="studyType" name="studyType">
                 <option value="" disabled selected>진행 방식</option>
-                <option value="ALL">전체</option>
+                <option value="BOTH">전체</option>
                 <option value="ON">온라인</option>
                 <option value="OFF">오프라인</option>
-                <option value="BOTH">온/오프라인</option>
             </select>
             <i class="bi bi-chevron-down"></i>
         </div>&nbsp;
 
         <div class="select-container" style="position: relative; display: inline-block;">
-            <select class="form-control" id="studySubject" name="studyType">
-                <option value="" disabled selected>스터디 과목</option>
-                <option value="A">A</option>
-                <option value="B">B</option>
-                <option value="C">C</option>
-                <option value="D">D</option>
+            <select class="form-control" id="sortType" name="sortType">
+                <option value="NEW" disabled selected>정렬</option>
+                <option value="POP">인기순</option>
+                <option value="NEW">최신순</option>
             </select>
             <i class="bi bi-chevron-down"></i>
         </div>

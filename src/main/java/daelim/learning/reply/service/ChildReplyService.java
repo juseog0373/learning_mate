@@ -18,10 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class ChildReplyService {
 
     private final ChildReplyRepository childReplyRepository;
-
     private final ReplyRepository replyRepository;
     private final UserRepository userRepository;
-
 
     // 대댓글 저장
     public void save(ChildReplyRequest request,

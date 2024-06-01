@@ -17,14 +17,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ReplyController {
 
     private final ReplyService replyService;
-    private final UserRepository userRepository;
-    private final BoardRepository boardRepository;
 
     // 댓글 작성
     @PostMapping("/board/detail/reply/{boardNo}")
-    public String write(@PathVariable(name="boardNo") Long boardNo, ReplyRequest request, HttpSession session) throws NullPointerException {
+    public String write(@PathVariable(name="boardNo") Long boardNo, ReplyRequest request, HttpSession session, RedirectAttributes redirectAttributes) throws NullPointerException {
         replyService.save(request, boardNo, session);
-        return "redirect:/board/detail/"+boardNo;
+
+        redirectAttributes.addAttribute("boardNo", boardNo);
+        return "redirect:/board/detail/{boardNo}";
     }
 
     // 수정
@@ -48,8 +48,8 @@ public class ReplyController {
                          RedirectAttributes redirectAttributes) {
 
         replyService.delete(replyNo);
-        redirectAttributes.addAttribute("boardNo", boardNo);
 
+        redirectAttributes.addAttribute("boardNo", boardNo);
         return "redirect:/board/detail/{boardNo}";
     }
 

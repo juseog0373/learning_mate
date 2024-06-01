@@ -1,7 +1,8 @@
 package daelim.learning.board;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import daelim.learning.board.dto.BoardUpdateRequest;
-import daelim.learning.reply.Reply;
+import daelim.learning.reply.entity.Reply;
 import daelim.learning.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,7 @@ public class Board {
     private String contactLink; // 오픈채팅링크
     private String content; // 본문
     private int viewCount; //조회수
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
     private User writer; // 작성자

@@ -29,15 +29,12 @@ public class BoardQueryRepository {
     }
 
     public List<Board> findAll(BoardSearchCond cond) {
-
         OrderSpecifier[] orderSpecifier = createOrderSpecifiers(cond);
-
-        System.out.println("studyType::::::::::::::::: "+cond.getStudyType());
-
         return query.select(board)
                 .from(board)
                 .where(
-                        likeStudyType(cond.getStudyType())
+                        likeStudyType(cond.getStudyType()),
+                        likeKeyword(cond.getKeyword())
                 )
                 .orderBy(orderSpecifier)
                 .fetch();
@@ -59,7 +56,16 @@ public class BoardQueryRepository {
 
     private BooleanExpression likeStudyType(StudyType studyType) {
         if (studyType != null && !studyType.equals("")) {
+            System.out.println("studyType = " + studyType);
             return board.studyType.eq(studyType);
+        }
+        return null;
+    }
+
+    private BooleanExpression likeKeyword(String keyword) {
+        if (StringUtils.hasText(keyword)) {
+            String likePattern = "%" + keyword + "%";
+            return board.title.like(likePattern).or(board.content.like(likePattern));
         }
         return null;
     }
