@@ -66,8 +66,6 @@
 <script>
     function like(boardNo) {
         var loginStatus = document.getElementById('loginStatus').value;
-        var buttonId = 'likeButton' + boardNo;
-        var button = document.getElementById(buttonId);
 
         if (loginStatus === 'not-logged-in') {
             alert("로그인 이후 이용 가능합니다.");
@@ -77,16 +75,26 @@
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
             }).done(function (result) {
-                if (result === "added") {
-                    button.innerHTML = '😍'; // 찜 추가 시 하트 이모지로 변경
-                } else if (result === "removed") {
-                    button.innerHTML = '😃'; // 찜 해제 시 악수 이모지로 변경
-                }
+                updateLikeButtons(boardNo, result);
             }).fail(function (error) {
                 alert(JSON.stringify(error));
             });
         }
     }
+
+    function updateLikeButtons(boardNo, result) {
+        var allBoardButton = document.getElementById('likeButton' + boardNo + '_allBoard');
+        var topBoardButton = document.getElementById('likeButton' + boardNo + '_topBoard');
+
+        if (result === "added") {
+            if (allBoardButton) allBoardButton.innerHTML = '😍'; // 찜 추가 시 하트 이모지로 변경
+            if (topBoardButton) topBoardButton.innerHTML = '😍'; // 찜 추가 시 하트 이모지로 변경
+        } else if (result === "removed") {
+            if (allBoardButton) allBoardButton.innerHTML = '😃'; // 찜 해제 시 악수 이모지로 변경
+            if (topBoardButton) topBoardButton.innerHTML = '😃'; // 찜 해제 시 악수 이모지로 변경
+        }
+    }
+
     $(document).ready(function() {
         // URL에서 파라미터 추출
         function getUrlParameter(name) {
@@ -175,9 +183,9 @@
                              th:text="'🚨오늘 마감!'">
                             <!-- 마감일이 오늘일 때 표시 -->
                         </div>
-                        <!-- 기타 요소 -->
+                        <!-- 찜하기 -->
                         <div style="margin-left: auto;">
-                            <a th:id="'likeButton' + ${list.boardNo}" th:onclick="|like(${list.boardNo})|"
+                            <a th:id="'likeButton' + ${list.boardNo} + '_topBoard'" th:onclick="|like(${list.boardNo})|"
                                th:class="${#lists.contains(likedBoards, list.boardNo) ? 'liked' : ''}"
                                style="text-decoration: none; color: inherit; margin-right: 10px; margin-top: 0px; font-size: 30px; cursor: pointer;">
                                 <span th:if="${#lists.contains(likedBoards, list.boardNo)}">😍</span>
@@ -246,7 +254,7 @@
                             💙 인기
                         </div>
                         <div style="margin-left: auto;">
-                            <a th:id="'likeButton' + ${list.boardNo}" th:onclick="|like(${list.boardNo})|"
+                            <a th:id="'likeButton' + ${list.boardNo} + '_allBoard'" th:onclick="|like(${list.boardNo})|"
                                th:class="${#lists.contains(likedBoards, list.boardNo) ? 'liked' : ''}"
                                style="text-decoration: none; color: inherit; margin-right: 10px; margin-top: 0px; font-size: 30px; cursor: pointer;">
                                 <span th:if="${#lists.contains(likedBoards, list.boardNo)}">😍</span>
