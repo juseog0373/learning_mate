@@ -31,6 +31,7 @@ public class ChildReply {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "reply_no")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Reply replyNo; // 부모 댓글
 
     @Lob
