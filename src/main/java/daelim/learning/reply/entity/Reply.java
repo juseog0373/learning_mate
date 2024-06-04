@@ -21,6 +21,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Builder
 @AllArgsConstructor
 public class Reply {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "reply_no")
@@ -32,6 +33,7 @@ public class Reply {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "board_no")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Board boardNo;
 
     @Lob
@@ -42,8 +44,6 @@ public class Reply {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "childNo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ChildReply> childReplies = new ArrayList<>();
-
-
+    @OneToMany(mappedBy = "replyNo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChildReply> childReplies;
 }
